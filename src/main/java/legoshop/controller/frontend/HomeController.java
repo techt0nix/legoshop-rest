@@ -1,7 +1,7 @@
 package legoshop.controller.frontend;
 
-
 import legoshop.domain.Type;
+import legoshop.service.BlobDecoder;
 import legoshop.service.TypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,13 +19,16 @@ public class HomeController {
     @Autowired
     private TypeService typeService;
 
+    @Autowired
+    private BlobDecoder blobDecoder;
+
     /**
      * Главная страница
      */
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String index(Model model) {
         List<Type> typesList = typeService.findAll();
-        List<String> base64List = typeService.getBase64List(typesList);
+        List<String> base64List = blobDecoder.getBase64List(typesList);
         model.addAttribute("types", typesList);
         model.addAttribute("images", base64List);
         return "index";

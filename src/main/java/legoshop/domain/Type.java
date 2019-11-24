@@ -9,7 +9,7 @@ import javax.validation.constraints.Pattern;
  */
 @Entity
 @Table(name = "part_type")
-public class Type {
+public class Type extends AbstractEntityWithImage {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,14 +26,12 @@ public class Type {
     @Pattern(regexp = "^[^#$%^&*()']*$")
     private String rusName;
 
-    @Lob
-    private byte[] image;
 
     public Type(Long id, @NotEmpty @Pattern(regexp = "^[^#$%^&*()']*$") String engName, @NotEmpty @Pattern(regexp = "^[^#$%^&*()']*$") String rusName, byte[] image) {
         this.id = id;
         this.engName = engName;
         this.rusName = rusName;
-        this.image = image;
+        super.setImage(image);
     }
 
     public Type () {
@@ -64,7 +62,4 @@ public class Type {
         this.rusName = rusName;
     }
 
-    public byte[] getImage() { return image; }
-
-    public void setImage(byte[] image) { this.image = image; }
 }
