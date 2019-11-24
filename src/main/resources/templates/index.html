@@ -1,10 +1,28 @@
-<!DOCTYPE HTML>
-<html xmlns:class="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:iter="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Common</title>
+    <style>table th, table td {padding: 5px;}</style>
 </head>
 <body>
+    <table border = "1">
+        <tbody>
+        <tr th:each="model, iterStat: ${types}" th:class="${iterStat.odd}? 'odd'">
+            <td th:text="${model.id}"></td>
+            <td th:text="${model.engName}"></td>
+            <td th:text="${model.rusName}"></td>
+            <td>
+                <img th:src="|data:image/jpg;base64,${images[iterStat.index]}|"/>
+            </td>
 
+        </tr>
+
+        <!--<tr th:each="model: ${images}">-->
+            <!--<img th:src="|data:image/jpg;base64,${image}|"/>-->
+        <!--</tr>-->
+
+        </tbody>
+    </table>
 </body>
 </html>
