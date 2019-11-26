@@ -1,6 +1,5 @@
 package legoshop.service;
 
-import legoshop.domain.AbstractEntityWithImage;
 import legoshop.domain.Type;
 import java.util.List;
 
@@ -11,5 +10,7 @@ import java.util.List;
 public interface TypeService {
 
     List<Type> findAll();
+
+    Type findTypeById(Long id);
 
 }

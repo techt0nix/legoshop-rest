@@ -25,4 +25,10 @@ public class TypeServiceImpl implements TypeService {
         return typeDao.findAll();
     }
 
+    @Transactional(readOnly = true)
+    @Override
+    public Type findTypeById(Long id) {
+        Type type = typeDao.getOne(id);
+        return type;
+    }
 }

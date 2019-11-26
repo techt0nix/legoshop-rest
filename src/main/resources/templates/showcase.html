@@ -2,24 +2,23 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:iter="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>Common</title>
-    <style>table th, table td {padding: 5px;}</style>
+    <title>Showcase</title>
 </head>
 <body>
     <table border = "1">
         <tbody>
-            <tr th:each="model, iterStat: ${types}" th:class="${iterStat.odd}? 'odd'">
+            <tr th:each="model, iterStat: ${parts}" th:class="${iterStat.odd}? 'odd'">
                 <td th:text="${model.id}"></td>
                 <td th:text="${model.engName}"></td>
                 <td th:text="${model.rusName}"></td>
+                <td th:text="${model.currentPrice}"></td>
+                <td th:text="${model.oldPrice}"></td>
+                <td th:text="${model.partNumber}"></td>
                 <td>
                     <img th:src="|data:image/jpg;base64,${images[iterStat.index]}|"/>
                 </td>
 
             </tr>
-            <!--<tr th:each="model: ${images}">-->
-                <!--<img th:src="|data:image/jpg;base64,${image}|"/>-->
-            <!--</tr>-->
         </tbody>
     </table>
 </body>

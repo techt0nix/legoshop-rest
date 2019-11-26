@@ -5,40 +5,36 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 import java.util.Set;
 
-/**
- * Тип деталей
- */
 @Entity
-@Table(name = "part_type")
-public class Type extends AbstractEntityWithImage {
+@Table(name = "color")
+public class Color {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", insertable = false, updatable = false, nullable = false)
     private Long id;
 
-    @Column(name = "eng_name", nullable = false)
+    @Column(name = "eng_name")
     @NotEmpty
     @Pattern(regexp = "^[^#$%^&*()']*$")
     private String engName;
 
-    @Column(name = "rus_name", nullable = false)
+    @Column(name = "rus_name")
     @NotEmpty
     @Pattern(regexp = "^[^#$%^&*()']*$")
     private String rusName;
 
-    @OneToMany(mappedBy = "type", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "color", cascade = CascadeType.REMOVE)
     private Set<Part> parts;
 
 
-    public Type(Long id, @NotEmpty @Pattern(regexp = "^[^#$%^&*()']*$") String engName, @NotEmpty @Pattern(regexp = "^[^#$%^&*()']*$") String rusName, byte[] image) {
+    public Color(Long id, @NotEmpty @Pattern(regexp = "^[^#$%^&*()']*$") String engName, @NotEmpty @Pattern(regexp = "^[^#$%^&*()']*$") String rusName) {
         this.id = id;
         this.engName = engName;
         this.rusName = rusName;
-        super.setImage(image);
     }
 
-    public Type () {
+    public Color() {
 
     }
 
@@ -64,13 +60,5 @@ public class Type extends AbstractEntityWithImage {
 
     public void setRusName(String rusName) {
         this.rusName = rusName;
-    }
-
-    public Set<Part> getParts() {
-        return parts;
-    }
-
-    public void setParts(Set<Part> parts) {
-        this.parts = parts;
     }
 }
