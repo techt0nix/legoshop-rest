@@ -6,6 +6,7 @@ import legoshop.service.PartService;
 import legoshop.service.TypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
@@ -14,6 +15,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -38,9 +41,12 @@ public class ShowcaseController {
 
     @RequestMapping(method = RequestMethod.GET, value = "/{typeId}")
     public String getTypeParts(@PathVariable Long typeId,
-                               @PageableDefault(sort = { "id"}, size = 2, direction = Sort.Direction.DESC) Pageable pageable,
+                               @RequestParam (defaultValue = "0") int page,
+                               @RequestParam(defaultValue = "10") Integer pageSize,
+                               @RequestParam(defaultValue = "id") String sortBy,
                                Model model) {
 
+        Pageable pageable = PageRequest.of(page, pageSize);
         Page<Part> pagedParts = partService.findPartsByType(typeId, pageable);
         int totalPages = pagedParts.getTotalPages();
         List<Part> pagedPartList = pagedParts.getContent();
