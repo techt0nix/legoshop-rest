@@ -37,7 +37,7 @@ public class ShowcaseController {
     @RequestMapping(method = RequestMethod.GET, value = "/{typeId}")
     public String getTypeParts(@PathVariable Long typeId,
                                @RequestParam (defaultValue = "0") int page,
-                               @RequestParam (defaultValue = "3") Integer size,
+                               @RequestParam (defaultValue = "1") Integer size,
                                @RequestParam (defaultValue = "eng_name") String sort,
                                @RequestParam (defaultValue = "desc") String order,
                                Model model) {
