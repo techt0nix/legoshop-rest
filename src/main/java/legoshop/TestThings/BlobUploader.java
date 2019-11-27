@@ -2,7 +2,6 @@ package legoshop.TestThings;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.*;
 
@@ -18,7 +17,7 @@ public class BlobUploader {
 
     public static void main(String[] args) throws IOException {
 
-        File file = new File("C:\\Users\\flatl\\Desktop\\квартира 201911.jpg");
+        File file = new File("C:\\Users\\flatl\\Desktop\\MyProjects\\lego shop\\pictures\\32254(white).jpg");
         FileInputStream fileInputStream = new FileInputStream(file);
 
         byte fileContent[] = new byte[(int)file.length()];
@@ -28,7 +27,7 @@ public class BlobUploader {
 
 
         String query = "select count(*) from part_type";
-        String blobQuery = "update part_type set image = ? where id = 1";
+        String blobQuery = "update part set image = ? where id = 3";
 
 
         try {

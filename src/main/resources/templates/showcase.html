@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Showcase</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 </head>
 <body>
     <table border = "1">
@@ -21,5 +22,30 @@
             </tr>
         </tbody>
     </table>
+
+    <!--<div class="row" th:fragment="pagination">-->
+        <!--<div class="col-md-2"></div>-->
+        <!--<div class="col-md-8">-->
+            <!--<nav aria-label="Pagination">-->
+                <!--<ul class="pagination justify-content-center">-->
+                    <!--<li class="page-item" th:each="pageNumber : ${pageNumbers}" >-->
+                        <!--<a class="page-link" th:href="@{|/category/${typeId}?page=${pageNumber-1}|}" th:text=${pageNumber}>1</a>-->
+                    <!--</li>-->
+                <!--</ul>-->
+            <!--</nav>-->
+        <!--</div>-->
+        <!--<div class="col-md-2"></div>-->
+    <!--</div>-->
+
+    <ul class="pagination">
+        <li class="page-item disabled">
+            <a class="page-link" href="#" tabindex="-1">Страницы</a>
+        </li>
+
+        <li class="page-item active" th:each="pageNumber : ${pageNumbers}">
+            <a class="page-link" th:href="@{|/category/${typeId}?page=${pageNumber-1}|}" tabindex="-1" th:text=${pageNumber}></a>
+        </li>
+    </ul>
+
 </body>
 </html>
