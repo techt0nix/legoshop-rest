@@ -36,10 +36,10 @@ public class ShowcaseController {
 
     @RequestMapping(method = RequestMethod.GET, value = "/{typeId}")
     public String getTypeParts(@PathVariable Long typeId,
-                               @RequestParam (defaultValue = "0") int page,
-                               @RequestParam (defaultValue = "1") Integer size,
-                               @RequestParam (defaultValue = "eng_name") String sort,
-                               @RequestParam (defaultValue = "desc") String order,
+                               @RequestParam  (required = false) Integer page,
+                               @RequestParam  (required = false) Integer size,
+                               @RequestParam  (required = false) String sort,
+                               @RequestParam  (required = false) String order,
                                Model model) {
 
         Page<Part> pagedParts = partService.findPartsByType(typeId, page, size, sort, order);
@@ -47,7 +47,7 @@ public class ShowcaseController {
         List<Part> pagedPartList = pagedParts.getContent();
 
         model.addAttribute("parts", pagedPartList);
-
+        model.addAttribute("page", page);
         if (totalPages > 0) {
             List<Integer> pageNumbers = IntStream.rangeClosed(1,totalPages).boxed().collect(Collectors.toList());
             model.addAttribute("pageNumbers", pageNumbers);

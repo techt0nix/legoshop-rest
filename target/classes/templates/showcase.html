@@ -6,6 +6,11 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 </head>
 <body>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous" ></script>
+
+
     <table border = "1">
         <tbody>
             <tr th:each="model, iterStat: ${parts}" th:class="${iterStat.odd}? 'odd'">
@@ -36,6 +41,39 @@
         <!--</div>-->
         <!--<div class="col-md-2"></div>-->
     <!--</div>-->
+
+    <div class="dropdown">
+        <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="showMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Показывать
+        </a>
+
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+            <a class="dropdown-item" th:href="@{|/category/${typeId}?page=0&size=1|}" tabindex="-1">Показывать по 1</a>
+            <a class="dropdown-item" th:href="@{|/category/${typeId}?page=0&size=2|}" tabindex="-1">Показывать по 2</a>
+            <a class="dropdown-item" th:href="@{|/category/${typeId}?page=0&size=3|}" tabindex="-1">Показывать по 3</a>
+        </div>
+    </div>
+    <div class="dropdown">
+        <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="sortMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Сортировать
+        </a>
+
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+            <a class="dropdown-item" th:href="@{|/category/${typeId}?page=0&sort=id|}" tabindex="-1">По id</a>
+            <a class="dropdown-item" th:href="@{|/category/${typeId}?page=0&sort=eng_name|}" tabindex="-1">По имени</a>
+        </div>
+    </div>
+    <div class="dropdown">
+        <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="sortOrderMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Порядок
+        </a>
+
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+            <a class="dropdown-item" th:href="@{|/category/${typeId}?page=0&order=asc|}" tabindex="-1">По возрастанию</a>
+            <a class="dropdown-item" th:href="@{|/category/${typeId}?page=0&order=desc|}" tabindex="-1">По убыванию</a>
+        </div>
+    </div>
+
 
     <ul class="pagination">
         <li class="page-item disabled">
