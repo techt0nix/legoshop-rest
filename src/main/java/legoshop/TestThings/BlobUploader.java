@@ -9,11 +9,14 @@ public class BlobUploader {
     private static final String url = "jdbc:mysql://localhost:3306/legoshop";
     private static final String user = "root";
     private static final String password = "njirf14n";
+    private static final String partBlobQuery = "update part set image = ? where img_name = ?";
+    private static final String typeBlobQuery = "update part_type set image = ? where img_name = ?";
 
     // JDBC variables for opening and managing connection
     private static Connection con;
 
     public static void main(String[] args) throws IOException {
+
 
         try {
             con = DriverManager.getConnection(url, user, password);
@@ -28,13 +31,12 @@ public class BlobUploader {
             for (File pic : files) {
                 String fileName = pic.getName();
                 System.out.println(fileName);
-                String blobQuery = "update part set image = ? where pic_name = ?";
                 FileInputStream fis = new FileInputStream(pic);
                 byte content[] = new byte[(int)pic.length()];
                 fis.read(content);
                 fis.close();
 
-                PreparedStatement preparedStatement = con.prepareStatement(blobQuery);
+                PreparedStatement preparedStatement = con.prepareStatement(typeBlobQuery);
                 preparedStatement.setBytes(1, content);
                 preparedStatement.setString(2,fileName);
 

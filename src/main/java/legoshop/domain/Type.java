@@ -31,6 +31,7 @@ public class Type extends AbstractEntityWithImage {
     private Set<Part> parts;
 
 
+
     public Type(Long id, @NotEmpty @Pattern(regexp = "^[^#$%^&*()']*$") String engName, @NotEmpty @Pattern(regexp = "^[^#$%^&*()']*$") String rusName, byte[] image) {
         this.id = id;
         this.engName = engName;

@@ -49,10 +49,6 @@ public class Part extends AbstractEntityWithImage {
     @Column(name = "available")
     private Boolean available;
 
-    @Column(name = "pic_name")
-    @NotBlank
-    private String picName;
-
 
     public String getComment() {
         return comment;
@@ -132,13 +128,5 @@ public class Part extends AbstractEntityWithImage {
 
     public void setColor(Color color) {
         this.color = color;
-    }
-
-    public String getPicName() {
-        return picName;
-    }
-
-    public void setPicName(String picName) {
-        this.picName = picName;
     }
 }
