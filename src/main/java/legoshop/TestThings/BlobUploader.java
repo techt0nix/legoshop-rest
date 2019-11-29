@@ -12,46 +12,44 @@ public class BlobUploader {
 
     // JDBC variables for opening and managing connection
     private static Connection con;
-    private static Statement stmt;
-    private static ResultSet rs;
 
     public static void main(String[] args) throws IOException {
 
-        File file = new File("C:\\Users\\flatl\\Desktop\\MyProjects\\lego shop\\pictures\\32254(white).jpg");
-        FileInputStream fileInputStream = new FileInputStream(file);
-
-        byte fileContent[] = new byte[(int)file.length()];
-        fileInputStream.read(fileContent);
-
-        fileInputStream.close();
-
-
-        String query = "select count(*) from part_type";
-        String blobQuery = "update part set image = ? where id = 3";
-
-
         try {
             con = DriverManager.getConnection(url, user, password);
-            stmt = con.createStatement();
-            rs = stmt.executeQuery(query);
 
-            PreparedStatement fd = con.prepareStatement(blobQuery);
-            fd.setBytes(1, fileContent);
 
-            if (fd.executeUpdate() != 0)
-                System.out.println("success");
+            File picsToUploadDirectory = new File("C:\\Users\\flatl\\Desktop\\MyProjects\\lego shop\\pictures\\");
+            File[] files = picsToUploadDirectory.listFiles();
 
-            while (rs.next()) {
-                int count = rs.getInt(1);
-                System.out.println("total number: " + count);
+            System.out.println("total files to upload: " + files.length);
+            int uploadedCounter = 0;
+
+            for (File pic : files) {
+                String fileName = pic.getName();
+                System.out.println(fileName);
+                String blobQuery = "update part set image = ? where pic_name = ?";
+                FileInputStream fis = new FileInputStream(pic);
+                byte content[] = new byte[(int)pic.length()];
+                fis.read(content);
+                fis.close();
+
+                PreparedStatement preparedStatement = con.prepareStatement(blobQuery);
+                preparedStatement.setBytes(1, content);
+                preparedStatement.setString(2,fileName);
+
+                if (preparedStatement.executeUpdate() != 0) {
+                    System.out.println("successfully uploaded");
+                    uploadedCounter++;
+                }
             }
+
+            System.out.println("file uploaded succesfully: " + uploadedCounter);
 
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
             try { con.close(); } catch(SQLException se) { /*can't do anything */ }
-            try { stmt.close(); } catch(SQLException se) { /*can't do anything */ }
-            try { rs.close(); } catch(SQLException se) { /*can't do anything */ }
         }
 
     }

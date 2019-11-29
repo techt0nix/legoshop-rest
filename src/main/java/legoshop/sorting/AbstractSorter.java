@@ -36,7 +36,7 @@ public class AbstractSorter implements Sorter {
 
         pageSizeOptions.put(1, "Показывать по 1");
         pageSizeOptions.put(2, "Показывать по 2");
-        pageSizeOptions.put(3, "Показывать по 3");
+        pageSizeOptions.put(5, "Показывать по 5");
     }
 
     private Integer pageNumber;
