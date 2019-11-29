@@ -4,6 +4,8 @@ import legoshop.domain.Part;
 import legoshop.service.BlobDecoder;
 import legoshop.service.PartService;
 import legoshop.service.TypeService;
+import legoshop.sorting.PartSorter;
+import legoshop.sorting.Sorter;
 import legoshop.sorting.SortingValuesDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -34,6 +36,9 @@ public class ShowcaseController {
     @Autowired
     private BlobDecoder blobDecoder;
 
+    @Autowired
+    private Sorter sorter;
+
 
     @RequestMapping(method = RequestMethod.GET, value = "/{typeId}")
     public String getTypeParts(@PathVariable Long typeId,
@@ -58,6 +63,7 @@ public class ShowcaseController {
 
         List<String> base64List = blobDecoder.getBase64List(pagedPartList);
         model.addAttribute("images", base64List);
+        sorter.prepareModel(model);
         return "showcase";
     }
 }

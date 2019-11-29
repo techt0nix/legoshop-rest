@@ -3,6 +3,7 @@ package legoshop.service.impl;
 import legoshop.dao.PartDao;
 import legoshop.domain.Part;
 import legoshop.service.PartService;
+import legoshop.sorting.PartSorter;
 import legoshop.sorting.Sorter;
 import legoshop.sorting.SortingValuesDTO;
 import org.springframework.beans.factory.annotation.Autowired;

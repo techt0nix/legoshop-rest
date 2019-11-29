@@ -43,36 +43,42 @@
     <!--</div>-->
 
     <div class="dropdown">
-        <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="showMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Показывать
-        </a>
-
-        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-            <a class="dropdown-item" th:href="@{|/category/${typeId}?page=0&size=1|}" tabindex="-1">Показывать по 1</a>
-            <a class="dropdown-item" th:href="@{|/category/${typeId}?page=0&size=2|}" tabindex="-1">Показывать по 2</a>
-            <a class="dropdown-item" th:href="@{|/category/${typeId}?page=0&size=3|}" tabindex="-1">Показывать по 3</a>
-        </div>
-    </div>
-    <div class="dropdown">
-        <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="sortMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="sortOptionsMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Сортировать
         </a>
 
         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-            <a class="dropdown-item" th:href="@{|/category/${typeId}?page=0&sort=id|}" tabindex="-1">По id</a>
-            <a class="dropdown-item" th:href="@{|/category/${typeId}?page=0&sort=eng_name|}" tabindex="-1">По имени</a>
+            <div th:each="sortOption: ${sortOptions}">
+                <a class="dropdown-item" th:href="@{|/category/${typeId}?page=0&sort=${sortOption.key}|}" tabindex="-1" th:text="${sortOption.value}"></a>
+            </div>
         </div>
     </div>
+
     <div class="dropdown">
         <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="sortOrderMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Порядок
         </a>
 
         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-            <a class="dropdown-item" th:href="@{|/category/${typeId}?page=0&order=asc|}" tabindex="-1">По возрастанию</a>
-            <a class="dropdown-item" th:href="@{|/category/${typeId}?page=0&order=desc|}" tabindex="-1">По убыванию</a>
+            <div th:each="direction: ${directions}">
+                <a class="dropdown-item" th:href="@{|/category/${typeId}?page=0&order=${direction.key}|}" tabindex="-1" th:text="${direction.value}"></a>
+            </div>
         </div>
     </div>
+
+    <div class="dropdown">
+        <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="showMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Показывать
+        </a>
+
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+            <div th:each="pageSize: ${pageSizes}">
+                <a class="dropdown-item" th:href="@{|/category/${typeId}?page=0&size=${pageSize.key}|}" tabindex="-1" th:text="${pageSize.value}"></a>
+            </div>
+        </div>
+    </div>
+
+
 
 
     <ul class="pagination">

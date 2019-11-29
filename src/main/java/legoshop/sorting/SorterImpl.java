@@ -3,7 +3,10 @@ package legoshop.sorting;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.stereotype.Component;
+import org.springframework.ui.Model;
+
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
  * Управляющий сортировкой и разбивкой на страницы
@@ -14,13 +17,26 @@ import org.springframework.stereotype.Component;
  * В конструкторе по умолчанию инициализует значения по умолчанию
  *
  */
-@Component
+
 public class SorterImpl implements Sorter {
 
     private final Integer firstPageDefault = 0;
     private final Integer pageSizeDefault = 2;
     private final String sortDefault = "id";
     private final String orderDefault = "asc";
+
+    protected final Map<String, String> sortFieldOptions = new LinkedHashMap<>();
+    private final Map<Integer, String> pageSizeOptions = new LinkedHashMap<>();
+    private final Map<String, String> directionOptions = new LinkedHashMap<>();
+
+    {
+        directionOptions.put("asc", "По возрастанию");
+        directionOptions.put("desc", "По убыванию");
+
+        pageSizeOptions.put(1, "Показывать по 1");
+        pageSizeOptions.put(2, "Показывать по 2");
+        pageSizeOptions.put(3, "Показывать по 3");
+    }
 
     private Integer pageNumber;
     private Integer pageSize;
@@ -36,7 +52,7 @@ public class SorterImpl implements Sorter {
         this.order = orderDefault;
     }
 
-
+    @Override
     public Pageable updateSorting (SortingValuesDTO sortingValues) {
         if (sortingValues.getPage() != null)
             this.pageNumber = sortingValues.getPage();
@@ -45,10 +61,17 @@ public class SorterImpl implements Sorter {
         if (sortingValues.getSort() != null)
             this.sort = Sort.by(sortingValues.getSort());
         if (sortingValues.getOrder() != null) {
-            if (!sortingValues.getOrder().equals(orderDefault))
-                this.sort = sort.descending();
+            this.sort = (!sortingValues.getOrder().equals(orderDefault)) ? sort.descending() : sort.ascending();
         }
         paging = PageRequest.of(pageNumber, pageSize, sort);
         return paging;
+    }
+
+    @Override
+    public Model prepareModel(Model model) {
+        model.addAttribute("sortOptions", sortFieldOptions);
+        model.addAttribute("directions", directionOptions);
+        model.addAttribute("pageSizes", pageSizeOptions);
+        return model;
     }
 }
