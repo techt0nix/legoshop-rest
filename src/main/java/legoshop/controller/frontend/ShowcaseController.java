@@ -46,10 +46,10 @@ public class ShowcaseController {
                                @RequestParam  (required = false) Integer page,
                                @RequestParam  (required = false) Integer size,
                                @RequestParam  (required = false) String sort,
-                               @RequestParam  (required = false) String order,
+                               @RequestParam  (required = false) String direction,
                                Model model) {
 
-        SortingValuesDTO sortingValues = new SortingValuesDTO(page, size, sort, order);
+        SortingValuesDTO sortingValues = new SortingValuesDTO(page, size, sort, direction);
         Page<Part> pagedParts = partService.findPartsByType(typeId, sortingValues);
         int totalPages = pagedParts.getTotalPages();
         List<Part> pagedPartList = pagedParts.getContent();

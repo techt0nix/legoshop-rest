@@ -61,7 +61,7 @@
 
         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
             <div th:each="direction: ${directions}">
-                <a class="dropdown-item" th:href="@{|/category/${typeId}?page=0&order=${direction.key}|}" tabindex="-1" th:text="${direction.value}"></a>
+                <a class="dropdown-item" th:href="@{|/category/${typeId}?page=0&direction=${direction.key}|}" tabindex="-1" th:text="${direction.value}"></a>
             </div>
         </div>
     </div>

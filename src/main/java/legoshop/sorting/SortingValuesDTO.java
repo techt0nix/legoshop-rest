@@ -5,13 +5,13 @@ public class SortingValuesDTO {
    private Integer page;
    private Integer size;
    private String sort;
-   private String order;
+   private String direction;
 
-    public SortingValuesDTO(Integer page, Integer size, String sort, String order) {
+    public SortingValuesDTO(Integer page, Integer size, String sort, String direction) {
         this.page = page;
         this.size = size;
         this.sort = sort;
-        this.order = order;
+        this.direction = direction;
     }
 
     public Integer getPage() {
@@ -38,12 +38,12 @@ public class SortingValuesDTO {
         this.sort = sort;
     }
 
-    public String getOrder() {
-        return order;
+    public String getDirection() {
+        return direction;
     }
 
-    public void setOrder(String order) {
-        this.order = order;
+    public void setDirection(String direction) {
+        this.direction = direction;
     }
 
     @Override
@@ -52,7 +52,7 @@ public class SortingValuesDTO {
                 "page=" + page +
                 ", size=" + size +
                 ", sort='" + sort + '\'' +
-                ", order='" + order + '\'' +
+                ", direction='" + direction + '\'' +
                 '}';
     }
 }

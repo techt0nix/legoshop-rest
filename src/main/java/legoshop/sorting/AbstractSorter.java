@@ -24,7 +24,7 @@ public class AbstractSorter implements Sorter {
     private final Integer firstPageDefault = 0;
     private final Integer pageSizeDefault = 2;
     private final String sortDefault = "id";
-    private final String orderDefault = "asc";
+    private final String directionDefault = "asc";
 
     protected final Map<String, String> sortFieldOptions = new LinkedHashMap<>();
     private final Map<Integer, String> pageSizeOptions = new LinkedHashMap<>();
@@ -42,7 +42,7 @@ public class AbstractSorter implements Sorter {
     private Integer pageNumber;
     private Integer pageSize;
     private Sort sort;
-    private String order;
+    private String direction;
     private Pageable paging;
 
     public AbstractSorter() {
@@ -50,7 +50,7 @@ public class AbstractSorter implements Sorter {
         this.pageNumber = firstPageDefault;
         this.pageSize = pageSizeDefault;
         this.sort = Sort.by(sortDefault);
-        this.order = orderDefault;
+        this.direction = directionDefault;
     }
 
     @Override
@@ -61,8 +61,8 @@ public class AbstractSorter implements Sorter {
             this.pageSize = sortingValues.getSize();
         if (sortingValues.getSort() != null)
             this.sort = Sort.by(sortingValues.getSort());
-        if (sortingValues.getOrder() != null) {
-            this.sort = (!sortingValues.getOrder().equals(orderDefault)) ? sort.descending() : sort.ascending();
+        if (sortingValues.getDirection() != null) {
+            this.sort = (!sortingValues.getDirection().equals(directionDefault)) ? sort.descending() : sort.ascending();
         }
         paging = PageRequest.of(pageNumber, pageSize, sort);
         return paging;
