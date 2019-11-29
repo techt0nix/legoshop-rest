@@ -27,15 +27,14 @@ public class PartServiceImpl implements PartService {
 
     @Transactional(readOnly = true)
     @Override
-    public Page<Part> findPartsByType(Long typeId, Integer page, Integer pageSize, String sortBy, String order) {
-        SortingValuesDTO sortingValues = new SortingValuesDTO(page, pageSize, sortBy, order);
+    public Page<Part> findPartsByType(Long typeId, SortingValuesDTO sortingValues) {
         Pageable paging = sorter.updateSorting(sortingValues);
         return partDao.findPartsByType(typeId, paging);
     }
 
     @Transactional(readOnly = true)
     @Override
-    public List<Part> findPartsByColor(Long colorId) {
+    public List<Part> findPartsByColor(Long colorId, SortingValuesDTO sortingValues) {
         return null;
     }
 

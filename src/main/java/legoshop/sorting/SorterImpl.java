@@ -45,7 +45,7 @@ public class SorterImpl implements Sorter {
         if (sortingValues.getSort() != null)
             this.sort = Sort.by(sortingValues.getSort());
         if (sortingValues.getOrder() != null) {
-            if (sortingValues.getOrder() != "asc")
+            if (!sortingValues.getOrder().equals(orderDefault))
                 this.sort = sort.descending();
         }
         paging = PageRequest.of(pageNumber, pageSize, sort);

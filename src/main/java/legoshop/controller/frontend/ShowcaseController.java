@@ -4,6 +4,7 @@ import legoshop.domain.Part;
 import legoshop.service.BlobDecoder;
 import legoshop.service.PartService;
 import legoshop.service.TypeService;
+import legoshop.sorting.SortingValuesDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -42,7 +43,8 @@ public class ShowcaseController {
                                @RequestParam  (required = false) String order,
                                Model model) {
 
-        Page<Part> pagedParts = partService.findPartsByType(typeId, page, size, sort, order);
+        SortingValuesDTO sortingValues = new SortingValuesDTO(page, size, sort, order);
+        Page<Part> pagedParts = partService.findPartsByType(typeId, sortingValues);
         int totalPages = pagedParts.getTotalPages();
         List<Part> pagedPartList = pagedParts.getContent();
 
