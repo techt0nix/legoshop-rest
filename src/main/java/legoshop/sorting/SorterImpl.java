@@ -5,55 +5,50 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 
+/**
+ * Управляющий сортировкой и разбивкой на страницы
+ *
+ * Инкапсулирует операции с опциями сортировки и разбивку на страницы
+ * Хранит в себе объект Pageable, его текущие значения, подгатавливает его и изменяет в соответствии с выбранными опциями
+ *
+ * В конструкторе по умолчанию инициализует значения по умолчанию
+ *
+ */
 @Component
 public class SorterImpl implements Sorter {
 
-    private static Integer FIRST_PAGE = 0;
-    private static Integer PAGE_SIZE_DEFAULT = 2;
-    private static String SORT_DEFAULT = "id";
-    private static String ORDER_DEFAULT = "asc";
-    private static Pageable pagable = PageRequest.of(FIRST_PAGE, PAGE_SIZE_DEFAULT, Sort.by(SORT_DEFAULT));
+    private final Integer firstPageDefault = 0;
+    private final Integer pageSizeDefault = 2;
+    private final String sortDefault = "id";
+    private final String orderDefault = "asc";
 
     private Integer pageNumber;
     private Integer pageSize;
     private Sort sort;
     private String order;
+    private Pageable paging;
+
+    public SorterImpl() {
+        this.paging = PageRequest.of(firstPageDefault, pageSizeDefault, Sort.by(sortDefault));
+        this.pageNumber = firstPageDefault;
+        this.pageSize = pageSizeDefault;
+        this.sort = Sort.by(sortDefault);
+        this.order = orderDefault;
+    }
+
 
     public Pageable updateSorting (SortingValuesDTO sortingValues) {
-        this.pageNumber = (sortingValues.getPage() == null) ? pagable.getPageNumber() : sortingValues.getPage();
-        this.pageSize = (sortingValues.getSize() == null) ? pagable.getPageSize() : sortingValues.getSize();
-        this.sort = (sortingValues.getSort() == null) ? pagable.getSort() : Sort.by(sortingValues.getSort());
-        this.order = (sortingValues.getOrder() == null) ? getOrderDefault() : sortingValues.getOrder();
-        pagable = PageRequest.of(getPageNumber(), getPageSize(), sort);
-        return pagable;
-    }
-
-//    private Sort createSort(String sortBy, String order) {
-//        Sort sort;
-//        if (order.equals("desc"))
-//            sort = Sort.by(Sort.Direction.DESC, sortBy);
-//        else
-//            sort = Sort.by(Sort.Direction.ASC, sortBy);
-//        return sort;
-//    }
-
-    public String getOrderDefault() {
-        return ORDER_DEFAULT;
-    }
-
-    public Integer getPageNumber() {
-        return pageNumber;
-    }
-
-    public Integer getPageSize() {
-        return pageSize;
-    }
-
-    public Sort getSort() {
-        return sort;
-    }
-
-    public String getOrder() {
-        return order;
+        if (sortingValues.getPage() != null)
+            this.pageNumber = sortingValues.getPage();
+        if (sortingValues.getSize() != null)
+            this.pageSize = sortingValues.getSize();
+        if (sortingValues.getSort() != null)
+            this.sort = Sort.by(sortingValues.getSort());
+        if (sortingValues.getOrder() != null) {
+            if (sortingValues.getOrder() != "asc")
+                this.sort = sort.descending();
+        }
+        paging = PageRequest.of(pageNumber, pageSize, sort);
+        return paging;
     }
 }
