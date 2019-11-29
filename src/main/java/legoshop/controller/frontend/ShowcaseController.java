@@ -4,10 +4,10 @@ import legoshop.domain.Part;
 import legoshop.service.BlobDecoder;
 import legoshop.service.PartService;
 import legoshop.service.TypeService;
-import legoshop.sorting.PartSorter;
 import legoshop.sorting.Sorter;
 import legoshop.sorting.SortingValuesDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -37,6 +37,7 @@ public class ShowcaseController {
     private BlobDecoder blobDecoder;
 
     @Autowired
+    @Qualifier("partSorter")
     private Sorter sorter;
 
 

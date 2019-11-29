@@ -4,7 +4,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.ui.Model;
-
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -15,10 +14,12 @@ import java.util.Map;
  * Хранит в себе объект Pageable, его текущие значения, подгатавливает его и изменяет в соответствии с выбранными опциями
  *
  * В конструкторе по умолчанию инициализует значения по умолчанию
+ * Добавление перечня опций сортировки (по умолчанию пустой) осуществляется в классах-потомках
+ *
  *
  */
 
-public class SorterImpl implements Sorter {
+public class AbstractSorter implements Sorter {
 
     private final Integer firstPageDefault = 0;
     private final Integer pageSizeDefault = 2;
@@ -44,7 +45,7 @@ public class SorterImpl implements Sorter {
     private String order;
     private Pageable paging;
 
-    public SorterImpl() {
+    public AbstractSorter() {
         this.paging = PageRequest.of(firstPageDefault, pageSizeDefault, Sort.by(sortDefault));
         this.pageNumber = firstPageDefault;
         this.pageSize = pageSizeDefault;

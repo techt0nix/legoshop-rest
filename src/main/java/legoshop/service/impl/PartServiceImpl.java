@@ -3,10 +3,10 @@ package legoshop.service.impl;
 import legoshop.dao.PartDao;
 import legoshop.domain.Part;
 import legoshop.service.PartService;
-import legoshop.sorting.PartSorter;
 import legoshop.sorting.Sorter;
 import legoshop.sorting.SortingValuesDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -24,6 +24,7 @@ public class PartServiceImpl implements PartService {
     private PartDao partDao;
 
     @Autowired
+    @Qualifier("partSorter")
     private Sorter sorter;
 
     @Transactional(readOnly = true)

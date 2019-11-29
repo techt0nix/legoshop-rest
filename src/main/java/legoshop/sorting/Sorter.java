@@ -1,6 +1,5 @@
 package legoshop.sorting;
 
-
 import org.springframework.data.domain.Pageable;
 import org.springframework.ui.Model;
 
