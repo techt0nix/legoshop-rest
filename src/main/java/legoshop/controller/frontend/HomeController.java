@@ -1,11 +1,11 @@
 package legoshop.controller.frontend;
 
 import legoshop.domain.Part;
-import legoshop.domain.Type;
+import legoshop.domain.Category;
 import legoshop.service.BlobDecoder;
 import legoshop.service.PagedModelPreparer;
 import legoshop.service.PartService;
-import legoshop.service.TypeService;
+import legoshop.service.CategoryService;
 import legoshop.sorting.SortingValuesDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -27,7 +27,7 @@ import java.util.List;
 public class HomeController {
 
     @Autowired
-    private TypeService typeService;
+    private CategoryService categoryService;
 
     @Autowired
     private BlobDecoder blobDecoder;
@@ -44,9 +44,9 @@ public class HomeController {
      */
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String index(Model model) {
-        List<Type> typesList = typeService.findAll();
-        List<String> base64List = blobDecoder.getBase64List(typesList);
-        model.addAttribute("types", typesList);
+        List<Category> categoriesList = categoryService.findAll();
+        List<String> base64List = blobDecoder.getBase64List(categoriesList);
+        model.addAttribute("categoris", categoriesList);
         model.addAttribute("images", base64List);
         return "index";
     }
@@ -64,6 +64,7 @@ public class HomeController {
         Page<Part> pagedParts = partService.searchParts(tag, sortingValues);
         pagedModelPreparer.preparePagedModel(pagedParts, model);
         model.addAttribute("tag", tag);
+        model.addAttribute("categories", categoryService.getCategoriesNames());
         return "search-results";
     }
 
@@ -80,6 +81,7 @@ public class HomeController {
         Page<Part> pagedParts = partService.searchParts(tag, sortingValues);
         pagedModelPreparer.preparePagedModel(pagedParts, model);
         model.addAttribute("tag", tag);
+        model.addAttribute("categories", categoryService.getCategoriesNames());
         return "search-results";
     }
 }

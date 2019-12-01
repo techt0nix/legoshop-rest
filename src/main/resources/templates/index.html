@@ -11,7 +11,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous" ></script>
 
     <div class="card-group">
-        <tr th:each="model, iterStat: ${types}" th:class="${iterStat.odd}? 'odd'">
+        <tr th:each="model, iterStat: ${categories}" th:class="${iterStat.odd}? 'odd'">
             <div class="card">
                 <img th:src="|data:image/jpg;base64,${images[iterStat.index]}|" class="card-img-top" alt="...">
                 <div class="card-body">
@@ -25,7 +25,7 @@
 
     <table border = "1">
         <tbody>
-            <tr th:each="model, iterStat: ${types}" th:class="${iterStat.odd}? 'odd'">
+            <tr th:each="model, iterStat: ${categories}" th:class="${iterStat.odd}? 'odd'">
                 <td th:text="${model.id}"></td>
                 <td th:text="${model.engName}" ></td>
                 <td th:text="${model.rusName}"></td>

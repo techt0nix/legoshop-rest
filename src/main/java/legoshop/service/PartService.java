@@ -11,7 +11,7 @@ import java.util.List;
 
 public interface PartService {
 
-    Page<Part> findPartsByType (Long typeId, SortingValuesDTO sortingValues);
+    Page<Part> findPartsByCategory(Long categoryId, SortingValuesDTO sortingValues);
 
     Page<Part> searchParts (String tag, SortingValuesDTO sortingValues);
 

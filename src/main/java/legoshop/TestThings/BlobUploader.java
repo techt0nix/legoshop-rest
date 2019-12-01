@@ -14,7 +14,7 @@ public class BlobUploader {
     private static final String user = "root";
     private static final String password = "njirf14n";
     private static final String partBlobQuery = "update part set image = ? where img_name = ?";
-    private static final String typeBlobQuery = "update part_type set image = ? where img_name = ?";
+    private static final String categoryBlobQuery = "update part_category set image = ? where img_name = ?";
 
     // JDBC variables for opening and managing connection
     private static Connection con;

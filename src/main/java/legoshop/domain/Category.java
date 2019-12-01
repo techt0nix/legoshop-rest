@@ -6,12 +6,12 @@ import javax.validation.constraints.Pattern;
 import java.util.Set;
 
 /**
- * Entity типа деталей
+ * Entity категории деталей
  */
 
 @Entity
-@Table(name = "part_type")
-public class Type extends AbstractEntityWithImage {
+@Table(name = "part_category")
+public class Category extends AbstractEntityWithImage {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,19 +28,19 @@ public class Type extends AbstractEntityWithImage {
     @Pattern(regexp = "^[^#$%^&*()']*$")
     private String rusName;
 
-    @OneToMany(mappedBy = "type", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "category", cascade = CascadeType.REMOVE)
     private Set<Part> parts;
 
 
 
-    public Type(Long id, @NotEmpty @Pattern(regexp = "^[^#$%^&*()']*$") String engName, @NotEmpty @Pattern(regexp = "^[^#$%^&*()']*$") String rusName, byte[] image) {
+    public Category(Long id, @NotEmpty @Pattern(regexp = "^[^#$%^&*()']*$") String engName, @NotEmpty @Pattern(regexp = "^[^#$%^&*()']*$") String rusName, byte[] image) {
         this.id = id;
         this.engName = engName;
         this.rusName = rusName;
         super.setImage(image);
     }
 
-    public Type () {
+    public Category() {
 
     }
 

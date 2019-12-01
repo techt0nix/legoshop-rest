@@ -23,7 +23,7 @@ public class Part extends AbstractEntityWithImage {
     private String partNumber;
 
     @ManyToOne
-    private Type type;
+    private Category category;
 
     @ManyToOne
     private Color color;
@@ -98,12 +98,12 @@ public class Part extends AbstractEntityWithImage {
         this.partNumber = partNumber;
     }
 
-    public Type getType() {
-        return type;
+    public Category getCategory() {
+        return category;
     }
 
-    public void setType(Type type) {
-        this.type = type;
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
     public String getEngName() {

@@ -13,7 +13,7 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface PartDao extends CrudRepository<Part, Long>, JpaRepository<Part, Long> {
 
-    @Query(value = "SELECT * FROM part WHERE type_id = ?", nativeQuery = true)
+    @Query(value = "SELECT * FROM part WHERE category_id = ?", nativeQuery = true)
     public Page<Part> findPartsByType(Long typeId, Pageable pageable);
 
 

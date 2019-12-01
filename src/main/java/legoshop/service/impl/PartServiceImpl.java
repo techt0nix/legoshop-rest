@@ -30,9 +30,9 @@ public class PartServiceImpl implements PartService {
 
     @Transactional(readOnly = true)
     @Override
-    public Page<Part> findPartsByType(Long typeId, SortingValuesDTO sortingValues) {
+    public Page<Part> findPartsByCategory(Long categoryId, SortingValuesDTO sortingValues) {
         Pageable paging = sorter.updateSorting(sortingValues);
-        return partDao.findPartsByType(typeId, paging);
+        return partDao.findPartsByType(categoryId, paging);
     }
 
 

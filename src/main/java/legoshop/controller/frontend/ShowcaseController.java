@@ -3,6 +3,7 @@ package legoshop.controller.frontend;
 import legoshop.domain.Part;
 import legoshop.service.PagedModelPreparer;
 import legoshop.service.PartService;
+import legoshop.service.CategoryService;
 import legoshop.sorting.SortingValuesDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -26,6 +27,9 @@ public class ShowcaseController {
     private PartService partService;
 
     @Autowired
+    private CategoryService categoryService;
+
+    @Autowired
     @Qualifier("pagedPartModelPreparer")
     private PagedModelPreparer pagedModelPreparer;
 
@@ -39,9 +43,10 @@ public class ShowcaseController {
                                Model model) {
 
         SortingValuesDTO sortingValues = new SortingValuesDTO(page, size, sort, direction);
-        Page<Part> pagedParts = partService.findPartsByType(typeId, sortingValues);
-        model.addAttribute("typeId", typeId);
+        Page<Part> pagedParts = partService.findPartsByCategory(typeId, sortingValues);
+        model.addAttribute("categoryId", typeId);
         pagedModelPreparer.preparePagedModel(pagedParts, model);
+        model.addAttribute("categories", categoryService.getCategoriesNames());
         return "showcase";
     }
 

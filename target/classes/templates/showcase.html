@@ -10,6 +10,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous" ></script>
 
+    <ul th:each="category : ${categories}">
+        <li th:text="${category}"></li>
+    </ul>
 
     <table border = "1">
         <tbody>
@@ -29,8 +32,8 @@
     </table>
 
     <form method="post" th:action="@{/search/}">
-        <input type="text" name="tag" action="search">
-        <button type="submit">Найти</button>
+        <input category="text" name="tag" action="search">
+        <button category="submit">Найти</button>
     </form>
 
     <div class="dropdown">
@@ -40,7 +43,7 @@
 
         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
             <div th:each="sortOption: ${sortOptions}">
-                <a class="dropdown-item" th:href="@{|/category/${typeId}?page=0&sort=${sortOption.key}|}" tabindex="-1" th:text="${sortOption.value}"></a>
+                <a class="dropdown-item" th:href="@{|/category/${categoryId}?page=0&sort=${sortOption.key}|}" tabindex="-1" th:text="${sortOption.value}"></a>
             </div>
         </div>
     </div>
@@ -52,7 +55,7 @@
 
         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
             <div th:each="direction: ${directions}">
-                <a class="dropdown-item" th:href="@{|/category/${typeId}?page=0&direction=${direction.key}|}" tabindex="-1" th:text="${direction.value}"></a>
+                <a class="dropdown-item" th:href="@{|/category/${categoryId}?page=0&direction=${direction.key}|}" tabindex="-1" th:text="${direction.value}"></a>
             </div>
         </div>
     </div>
@@ -64,7 +67,7 @@
 
         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
             <div th:each="pageSize: ${pageSizes}">
-                <a class="dropdown-item" th:href="@{|/category/${typeId}?page=0&size=${pageSize.key}|}" tabindex="-1" th:text="${pageSize.value}"></a>
+                <a class="dropdown-item" th:href="@{|/category/${categoryId}?page=0&size=${pageSize.key}|}" tabindex="-1" th:text="${pageSize.value}"></a>
             </div>
         </div>
     </div>
