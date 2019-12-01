@@ -31,10 +31,4 @@ public class CategoryServiceImpl implements CategoryService {
         Category category = categoryDao.getOne(id);
         return category;
     }
-
-    @Transactional
-    @Override
-    public List<String> getCategoriesNames() {
-        return categoryDao.getCategoriesNames();
-    }
 }

@@ -64,7 +64,7 @@ public class HomeController {
         Page<Part> pagedParts = partService.searchParts(tag, sortingValues);
         pagedModelPreparer.preparePagedModel(pagedParts, model);
         model.addAttribute("tag", tag);
-        model.addAttribute("categories", categoryService.getCategoriesNames());
+        model.addAttribute("categories", categoryService.findAll());
         return "search-results";
     }
 
@@ -81,7 +81,7 @@ public class HomeController {
         Page<Part> pagedParts = partService.searchParts(tag, sortingValues);
         pagedModelPreparer.preparePagedModel(pagedParts, model);
         model.addAttribute("tag", tag);
-        model.addAttribute("categories", categoryService.getCategoriesNames());
+        model.addAttribute("categories", categoryService.findAll());
         return "search-results";
     }
 }

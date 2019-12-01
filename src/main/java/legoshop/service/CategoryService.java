@@ -11,8 +11,6 @@ public interface CategoryService {
 
     List<Category> findAll();
 
-    List<String> getCategoriesNames();
-
     Category findTypeById(Long id);
 
 }

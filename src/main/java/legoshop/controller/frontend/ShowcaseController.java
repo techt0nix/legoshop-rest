@@ -46,7 +46,7 @@ public class ShowcaseController {
         Page<Part> pagedParts = partService.findPartsByCategory(typeId, sortingValues);
         model.addAttribute("categoryId", typeId);
         pagedModelPreparer.preparePagedModel(pagedParts, model);
-        model.addAttribute("categories", categoryService.getCategoriesNames());
+        model.addAttribute("categories", categoryService.findAll());
         return "showcase";
     }
 
