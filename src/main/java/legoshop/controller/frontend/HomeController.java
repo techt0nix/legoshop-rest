@@ -56,8 +56,8 @@ public class HomeController {
     public String filter(@RequestParam String tag,
                          @RequestParam  (defaultValue = "0", required = false) Integer page,
                          @RequestParam  (required = false) Integer size,
-                         @RequestParam  (required = false) String sort,
-                         @RequestParam  (required = false) String direction,
+                         @RequestParam  (defaultValue = "id", required = false) String sort,
+                         @RequestParam  (defaultValue = "asc", required = false) String direction,
                          Model model ) {
 
         SortingValuesDTO sortingValues = new SortingValuesDTO(page, size, sort, direction);
@@ -70,11 +70,11 @@ public class HomeController {
 
     @RequestMapping(value = "/search/tag={tag}", method = RequestMethod.GET)
     public String switchSearchResultsPage(@PathVariable String tag,
-                         @RequestParam  (required = false) Integer page,
-                         @RequestParam  (required = false) Integer size,
-                         @RequestParam  (required = false) String sort,
-                         @RequestParam  (required = false) String direction,
-                         Model model ) {
+                                          @RequestParam  (required = false) Integer page,
+                                          @RequestParam  (required = false) Integer size,
+                                          @RequestParam  (required = false) String sort,
+                                          @RequestParam  (required = false) String direction,
+                                          Model model) {
 
         SortingValuesDTO sortingValues = new SortingValuesDTO(page, size, sort, direction);
         Page<Part> pagedParts = partService.searchParts(tag, sortingValues);
