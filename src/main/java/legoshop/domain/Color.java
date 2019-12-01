@@ -5,6 +5,10 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 import java.util.Set;
 
+/**
+ * Entity цветов деталей
+ */
+
 @Entity
 @Table(name = "color")
 public class Color {

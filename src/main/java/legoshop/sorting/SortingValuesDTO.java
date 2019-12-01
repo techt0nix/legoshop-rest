@@ -1,5 +1,9 @@
 package legoshop.sorting;
 
+/**
+ * Data transfer object для передачи опций сортировки, направления сортировки, размера Page, текущей страницы
+ */
+
 public class SortingValuesDTO {
 
    private Integer page;

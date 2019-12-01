@@ -27,6 +27,7 @@ public class PartServiceImpl implements PartService {
     @Qualifier("partSorter")
     private Sorter sorter;
 
+
     @Transactional(readOnly = true)
     @Override
     public Page<Part> findPartsByType(Long typeId, SortingValuesDTO sortingValues) {
@@ -34,11 +35,21 @@ public class PartServiceImpl implements PartService {
         return partDao.findPartsByType(typeId, paging);
     }
 
+
+    @Transactional(readOnly = true)
+    @Override
+    public Page<Part> searchParts(String tag, SortingValuesDTO sortingValues) {
+        Pageable paging = sorter.updateSorting(sortingValues);
+        return partDao.searchParts(tag, paging);
+    }
+
+
     @Transactional(readOnly = true)
     @Override
     public List<Part> findPartsByColor(Long colorId, SortingValuesDTO sortingValues) {
         return null;
     }
+
 
     @Transactional(readOnly = true)
     @Override

@@ -13,6 +13,8 @@ public interface PartService {
 
     Page<Part> findPartsByType (Long typeId, SortingValuesDTO sortingValues);
 
+    Page<Part> searchParts (String tag, SortingValuesDTO sortingValues);
+
     List<Part> findPartsByColor(Long colorId, SortingValuesDTO sortingValues);
 
     List<Part> findPartByPartNumber(String partNumber);

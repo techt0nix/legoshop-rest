@@ -28,6 +28,10 @@
         </tbody>
     </table>
 
+    <form method="post" th:action="@{/search/}">
+        <input type="text" name="tag" action="search">
+        <button type="submit">Найти</button>
+    </form>
 
     <div class="dropdown">
         <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="sortOptionsMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

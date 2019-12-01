@@ -7,11 +7,16 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
-import java.util.List;
+/**
+ * Data Access Object для таблицы part
+ */
 
 public interface PartDao extends CrudRepository<Part, Long>, JpaRepository<Part, Long> {
 
-    @Query(value = "SELECT * from part where type_id = ?", nativeQuery = true)
+    @Query(value = "SELECT * FROM part WHERE type_id = ?", nativeQuery = true)
     public Page<Part> findPartsByType(Long typeId, Pageable pageable);
+
+    @Query(value = "SELECT * FROM part WHERE CONCAT(eng_name,' ', part_number) LIKE %?%", nativeQuery = true)
+    public Page<Part> searchParts(String tag, Pageable pageable);
 
 }

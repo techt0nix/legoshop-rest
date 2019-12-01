@@ -5,6 +5,10 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.*;
 
+/**
+ * Утилита для кодировки и загрузки картинок в виде blob в базу данных
+ */
+
 public class BlobUploader {
     private static final String url = "jdbc:mysql://localhost:3306/legoshop";
     private static final String user = "root";
@@ -36,7 +40,7 @@ public class BlobUploader {
                 fis.read(content);
                 fis.close();
 
-                PreparedStatement preparedStatement = con.prepareStatement(typeBlobQuery);
+                PreparedStatement preparedStatement = con.prepareStatement(partBlobQuery);
                 preparedStatement.setBytes(1, content);
                 preparedStatement.setString(2,fileName);
 

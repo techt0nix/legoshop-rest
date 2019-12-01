@@ -6,8 +6,9 @@ import javax.validation.constraints.Pattern;
 import java.util.Set;
 
 /**
- * Тип деталей
+ * Entity типа деталей
  */
+
 @Entity
 @Table(name = "part_type")
 public class Type extends AbstractEntityWithImage {

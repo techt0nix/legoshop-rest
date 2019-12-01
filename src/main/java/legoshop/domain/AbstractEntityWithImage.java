@@ -5,6 +5,10 @@ import javax.persistence.Lob;
 import javax.persistence.MappedSuperclass;
 import javax.validation.constraints.NotBlank;
 
+/**
+ * Абстрактная entity, которое имеет картинку (image)
+ */
+
 @MappedSuperclass
 public class AbstractEntityWithImage {
 

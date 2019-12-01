@@ -2,6 +2,7 @@ package legoshop.sorting;
 
 import org.springframework.stereotype.Component;
 
+
 @Component
 public class PartSorter extends AbstractSorter {
 
