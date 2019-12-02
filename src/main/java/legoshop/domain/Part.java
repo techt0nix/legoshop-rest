@@ -49,6 +49,12 @@ public class Part extends AbstractEntityWithImage {
     @Column(name = "available")
     private Boolean available;
 
+    @Column(name = "total_income")
+    private Integer totalIncome;
+
+    @Column(name = "total_outcome")
+    private Integer totalOutcome;
+
 
     public String getComment() {
         return comment;
@@ -128,5 +134,21 @@ public class Part extends AbstractEntityWithImage {
 
     public void setColor(Color color) {
         this.color = color;
+    }
+
+    public Integer getTotalIncome() {
+        return totalIncome;
+    }
+
+    public void setTotalIncome(int totalIncome) {
+        this.totalIncome = totalIncome;
+    }
+
+    public Integer getTotalOutcome() {
+        return totalOutcome;
+    }
+
+    public void setTotalOutcome(int totalOutcome) {
+        this.totalOutcome = totalOutcome;
     }
 }
