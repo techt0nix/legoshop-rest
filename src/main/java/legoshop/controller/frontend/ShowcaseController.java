@@ -1,5 +1,6 @@
 package legoshop.controller.frontend;
 
+import legoshop.TestThings.IncomeCreator;
 import legoshop.domain.Part;
 import legoshop.service.PagedModelPreparer;
 import legoshop.service.PartService;
@@ -30,6 +31,9 @@ public class ShowcaseController {
     private CategoryService categoryService;
 
     @Autowired
+    private IncomeCreator incomeCreator;
+
+    @Autowired
     @Qualifier("pagedPartModelPreparer")
     private PagedModelPreparer pagedModelPreparer;
 
@@ -47,6 +51,7 @@ public class ShowcaseController {
         model.addAttribute("categoryId", typeId);
         pagedModelPreparer.preparePagedModel(pagedParts, model);
         model.addAttribute("categories", categoryService.findAll());
+        incomeCreator.createIncome();
         return "showcase";
     }
 

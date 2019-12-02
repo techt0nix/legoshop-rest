@@ -20,16 +20,16 @@ import java.util.Set;
 public class IncomeCreator {
 
     @Autowired
-    IncomeDao incomeDao;
+    private IncomeDao incomeDao;
 
     @Autowired
-    IncomeItemDao incomeItemDao;
+    private IncomeItemDao incomeItemDao;
 
     @Autowired
-    OutcomeItemDao outcomeItemDao;
+    private OutcomeItemDao outcomeItemDao;
 
     @Autowired
-    PartDao partDao;
+    private PartDao partDao;
 
 
     public void createIncome() {
@@ -43,11 +43,12 @@ public class IncomeCreator {
         incomeItem.setItem_id(itemId);
         incomeItem.setComment("first income item");
 
-        Integer totalIncomeByPartId = incomeItemDao.countTotalIncomeByPartId(itemId);
+        Integer totalIncomeByPartId = countTotalIncomeByItemId(itemId);
+        Integer totalOutcomeByPartId = countTotalOutcomeByItemId(itemId);
 
         System.out.println("total income by part id " + itemId + " = " + totalIncomeByPartId);
-        System.out.println("total outcome by part_id " + itemId + " = " + outcomeItemDao.countTotalOutcomeByItemId(itemId));
-
+        System.out.println("total outcome by part_id " + itemId + " = " + totalOutcomeByPartId);
+        System.out.println("total qty by part_id" + itemId + " = " + (totalIncomeByPartId - totalOutcomeByPartId));
 
         Set<IncomeItem> incomeItems = new HashSet<>();
         incomeItems.add(incomeItem);
@@ -58,14 +59,22 @@ public class IncomeCreator {
         income.setComment("first income");
 
         incomeDao.save(income);
+
+        totalIncomeByPartId = countTotalIncomeByItemId(itemId);
+        totalOutcomeByPartId = countTotalOutcomeByItemId(itemId);
+        System.out.println("----------- after inserting");
+        System.out.println("total income by part id " + itemId + " = " + totalIncomeByPartId);
+        System.out.println("total outcome by part_id " + itemId + " = " + totalOutcomeByPartId);
+        System.out.println("total qty by part_id" + itemId + " = " + (totalIncomeByPartId - totalOutcomeByPartId));
     }
 
     private Integer countTotalIncomeByItemId(Long itemId){
-        return incomeItemDao.countTotalIncomeByPartId(itemId);
+        Integer total = incomeItemDao.countTotalIncomeByPartId(itemId);
+        return total == null ? 0 : total;
     }
 
     private Integer countTotalOutcomeByItemId(Long itemId){
-        return outcomeItemDao.countTotalOutcomeByItemId(itemId);
+        Integer total = outcomeItemDao.countTotalOutcomeByItemId(itemId);
+        return total == null ? 0 : total;
     }
-
 }
