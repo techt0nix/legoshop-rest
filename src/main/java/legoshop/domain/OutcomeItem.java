@@ -38,6 +38,9 @@ public class OutcomeItem {
     @Column(name = "comment")
     private String comment;
 
+    @Enumerated(EnumType.STRING)
+    private OutcomeType outcomeType;
+
 
     @Override
     public boolean equals(Object o) {
@@ -85,5 +88,13 @@ public class OutcomeItem {
 
     public void setComment(String comment) {
         this.comment = comment;
+    }
+
+    public OutcomeType getOutcomeType() {
+        return outcomeType;
+    }
+
+    public void setOutcomeType(OutcomeType outcomeType) {
+        this.outcomeType = outcomeType;
     }
 }

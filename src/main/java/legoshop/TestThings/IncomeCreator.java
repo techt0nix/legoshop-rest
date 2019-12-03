@@ -6,6 +6,8 @@ import legoshop.dao.OutcomeItemDao;
 import legoshop.dao.PartDao;
 import legoshop.domain.Income;
 import legoshop.domain.IncomeItem;
+import legoshop.domain.OutcomeItem;
+import legoshop.domain.OutcomeType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import java.util.Date;
@@ -33,15 +35,14 @@ public class IncomeCreator {
 
 
     public void createIncome() {
-        Income income = new Income();
-
-        IncomeItem incomeItem = new IncomeItem();
-        int incomeItemQty = 20;
+        Set<IncomeItem> incomeItems = new HashSet<>();
         Long itemId = 2L;
+        IncomeItem incomeItem = createIncomeItem(itemId, 20);
+        incomeItems.add(incomeItem);
 
-        incomeItem.setQuantity(incomeItemQty);
-        incomeItem.setItem_id(itemId);
-        incomeItem.setComment("first income item");
+        Income income = prepareIncome(incomeItems);
+
+        incomeItem.setIncome(income);
 
         Integer totalIncomeByPartId = countTotalIncomeByItemId(itemId);
         Integer totalOutcomeByPartId = countTotalOutcomeByItemId(itemId);
@@ -50,15 +51,12 @@ public class IncomeCreator {
         System.out.println("total outcome by part_id " + itemId + " = " + totalOutcomeByPartId);
         System.out.println("total qty by part_id" + itemId + " = " + (totalIncomeByPartId - totalOutcomeByPartId));
 
-        Set<IncomeItem> incomeItems = new HashSet<>();
-        incomeItems.add(incomeItem);
-
-        incomeItem.setIncome(income);
-        income.setItems(incomeItems);
-        income.setDate(new Date());
-        income.setComment("first income");
+        OutcomeItem outcomeItem = createOutcomeItem(itemId, 66, OutcomeType.SELL);
+        OutcomeItem outcomeItem2 = createOutcomeItem(itemId, 21, OutcomeType.WRITE_OFF);
 
         incomeDao.save(income);
+        outcomeItemDao.save(outcomeItem);
+        outcomeItemDao.save(outcomeItem2);
 
         totalIncomeByPartId = countTotalIncomeByItemId(itemId);
         totalOutcomeByPartId = countTotalOutcomeByItemId(itemId);
@@ -76,5 +74,27 @@ public class IncomeCreator {
     private Integer countTotalOutcomeByItemId(Long itemId){
         Integer total = outcomeItemDao.countTotalOutcomeByItemId(itemId);
         return total == null ? 0 : total;
+    }
+
+    private OutcomeItem createOutcomeItem(Long itemId, Integer quantity, OutcomeType outcomeType) {
+        OutcomeItem outcomeItem = new OutcomeItem();
+        outcomeItem.setItem_id(itemId);
+        outcomeItem.setQuantity(quantity);
+        outcomeItem.setOutcomeType(outcomeType);
+        return outcomeItem;
+    }
+
+    private IncomeItem createIncomeItem(Long itemId, Integer quantity) {
+        IncomeItem incomeItem = new IncomeItem();
+        incomeItem.setItem_id(itemId);
+        incomeItem.setQuantity(quantity);
+        return incomeItem;
+    }
+
+    private Income prepareIncome(Set<IncomeItem> incomeItems) {
+        Income income = new Income();
+        income.setItems(incomeItems);
+        income.setDate(new Date());
+        return income;
     }
 }
