@@ -9,5 +9,4 @@ public interface IncomeItemDao extends CrudRepository<IncomeItem, Long>, JpaRepo
 
     @Query(value = "SELECT SUM(quantity) FROM income_item WHERE part_id = ?", nativeQuery = true)
     Integer countTotalIncomeByPartId(Long itemId);
-
 }

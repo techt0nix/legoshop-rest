@@ -1,10 +1,9 @@
 package legoshop.TestThings;
 
 import legoshop.dao.IncomeDao;
-import legoshop.dao.IncomeItemDao;
-import legoshop.dao.OutcomeItemDao;
-import legoshop.dao.PartDao;
 import legoshop.domain.*;
+import legoshop.service.IncomeItemService;
+import legoshop.service.OutcomeItemService;
 import legoshop.service.PartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -23,13 +22,10 @@ public class IncomeCreator {
     private IncomeDao incomeDao;
 
     @Autowired
-    private IncomeItemDao incomeItemDao;
+    private IncomeItemService incomeItemService;
 
     @Autowired
-    private OutcomeItemDao outcomeItemDao;
-
-    @Autowired
-    private PartDao partDao;
+    private OutcomeItemService outcomeItemService;
 
     @Autowired
     private PartService partService;
@@ -56,8 +52,8 @@ public class IncomeCreator {
         OutcomeItem outcomeItem2 = createOutcomeItem(itemId, 21, OutcomeType.WRITE_OFF);
 
         incomeDao.save(income);
-        outcomeItemDao.save(outcomeItem);
-        outcomeItemDao.save(outcomeItem2);
+        outcomeItemService.saveOutcomeItem(outcomeItem);
+        outcomeItemService.saveOutcomeItem(outcomeItem2);
 
         totalIncomeByPartId = countTotalIncomeByItemId(itemId);
         totalOutcomeByPartId = countTotalOutcomeByItemId(itemId);
@@ -68,13 +64,11 @@ public class IncomeCreator {
     }
 
     private Integer countTotalIncomeByItemId(Long itemId){
-        Integer total = incomeItemDao.countTotalIncomeByPartId(itemId);
-        return total == null ? 0 : total;
+        return incomeItemService.countTotalIncomeByPartId(itemId);
     }
 
     private Integer countTotalOutcomeByItemId(Long itemId){
-        Integer total = outcomeItemDao.countTotalOutcomeByItemId(itemId);
-        return total == null ? 0 : total;
+        return outcomeItemService.countTotalOutcomeByPartId(itemId);
     }
 
     private OutcomeItem createOutcomeItem(Long itemId, Integer quantity, OutcomeType outcomeType) {

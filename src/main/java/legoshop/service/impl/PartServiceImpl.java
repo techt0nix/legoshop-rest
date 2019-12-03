@@ -1,6 +1,8 @@
 package legoshop.service.impl;
 
 import legoshop.dao.PartDao;
+import legoshop.domain.IncomeItem;
+import legoshop.domain.OutcomeItem;
 import legoshop.domain.Part;
 import legoshop.service.PartService;
 import legoshop.sorting.Sorter;
@@ -12,6 +14,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Реализация сервиса деталей PartService
@@ -48,6 +51,22 @@ public class PartServiceImpl implements PartService {
     @Override
     public Part getPartById(Long id) {
         return partDao.findPartById(id);
+    }
+
+
+    @Transactional(readOnly = true)
+    @Override
+    public Set<IncomeItem> getIncomeItemsById(Long id) {
+        Part part = partDao.findPartById(id);
+        return part.getIncomes();
+    }
+
+
+    @Transactional(readOnly = true)
+    @Override
+    public Set<OutcomeItem> getOutcomeItemsById(Long id) {
+        Part part = partDao.findPartById(id);
+        return part.getOutcomes();
     }
 
 

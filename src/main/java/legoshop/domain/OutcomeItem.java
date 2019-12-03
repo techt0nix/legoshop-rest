@@ -60,7 +60,6 @@ public class OutcomeItem {
         this.id = id;
     }
 
-
     public Integer getQuantity() {
         return quantity;
     }

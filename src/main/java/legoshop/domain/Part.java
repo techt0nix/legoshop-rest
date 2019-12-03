@@ -63,6 +63,54 @@ public class Part extends AbstractEntityWithImage {
     private Set<OutcomeItem> outcomes;
 
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getPartNumber() {
+        return partNumber;
+    }
+
+    public void setPartNumber(String partNumber) {
+        this.partNumber = partNumber;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
+    public Color getColor() {
+        return color;
+    }
+
+    public void setColor(Color color) {
+        this.color = color;
+    }
+
+    public String getEngName() {
+        return engName;
+    }
+
+    public void setEngName(String engName) {
+        this.engName = engName;
+    }
+
+    public String getRusName() {
+        return rusName;
+    }
+
+    public void setRusName(String rusName) {
+        this.rusName = rusName;
+    }
+
     public String getComment() {
         return comment;
     }
@@ -95,72 +143,16 @@ public class Part extends AbstractEntityWithImage {
         this.available = available;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getPartNumber() {
-        return partNumber;
-    }
-
-    public void setPartNumber(String partNumber) {
-        this.partNumber = partNumber;
-    }
-
-    public Category getCategory() {
-        return category;
-    }
-
-    public void setCategory(Category category) {
-        this.category = category;
-    }
-
-    public String getEngName() {
-        return engName;
-    }
-
-    public void setEngName(String engName) {
-        this.engName = engName;
-    }
-
-    public String getRusName() {
-        return rusName;
-    }
-
-    public void setRusName(String rusName) {
-        this.rusName = rusName;
-    }
-
-    public Color getColor() {
-        return color;
-    }
-
-    public void setColor(Color color) {
-        this.color = color;
-    }
-
     public Integer getTotalIncome() {
         return totalIncome;
     }
 
-    public void setTotalIncome(int totalIncome) {
+    public void setTotalIncome(Integer totalIncome) {
         this.totalIncome = totalIncome;
     }
 
     public Integer getTotalOutcome() {
         return totalOutcome;
-    }
-
-    public void setTotalOutcome(int totalOutcome) {
-        this.totalOutcome = totalOutcome;
-    }
-
-    public void setTotalIncome(Integer totalIncome) {
-        this.totalIncome = totalIncome;
     }
 
     public void setTotalOutcome(Integer totalOutcome) {
