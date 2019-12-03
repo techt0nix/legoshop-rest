@@ -77,16 +77,18 @@ public class PartServiceImpl implements PartService {
     }
 
 
+    @Transactional
+    @Override
+    public void updateQuantity(Part part, Integer quantity) {
+        part.setQuantity(quantity);
+        partDao.saveAndFlush(part);
+    }
+
+
     @Transactional(readOnly = true)
     @Override
     public List<Part> findPartsByColor(Long colorId, SortingValuesDTO sortingValues) {
         return null;
     }
 
-
-    @Transactional(readOnly = true)
-    @Override
-    public List<Part> findPartByPartNumber(String partNumber) {
-        return null;
-    }
 }

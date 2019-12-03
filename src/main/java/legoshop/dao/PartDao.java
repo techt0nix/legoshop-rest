@@ -36,19 +36,4 @@ public interface PartDao extends CrudRepository<Part, Long>, JpaRepository<Part,
     @Query(value = "SELECT * FROM part WHERE CONCAT(eng_name,' ', part_number) LIKE %?%", nativeQuery = true)
     Page<Part> searchParts(String tag, Pageable pageable);
 
-
-    @Query(value = "SELECT total_income FROM part WHERE id = ?", nativeQuery = true)
-    Integer getTotalIncomeByPartId(Long id);
-
-
-    @Query(value = "SELECT total_outcome FROM part WHERE id = ?", nativeQuery = true)
-    Integer getTotalOutcomeByPartId(Long id);
-
-
-    @Query(value = "UPDATE part SET total_income = ? WHERE id = ?", nativeQuery = true)
-    void updateTotalIncomeByPartId(Integer totalIncome, Long id);
-
-
-    @Query(value = "UPDATE part SET total_outcome = ? WHERE id = ?", nativeQuery = true)
-    void updateTotalOutcomeByPartId(Integer totalOutcome, Long id);
 }

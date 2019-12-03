@@ -26,9 +26,8 @@ public interface PartService {
 
     Set<OutcomeItem> getOutcomeItemsById(Long id);
 
+    void updateQuantity(Part part, Integer quantity);
 
     List<Part> findPartsByColor(Long colorId, SortingValuesDTO sortingValues);
-
-    List<Part> findPartByPartNumber(String partNumber);
 
 }

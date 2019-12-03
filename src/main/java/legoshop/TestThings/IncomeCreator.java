@@ -1,8 +1,8 @@
 package legoshop.TestThings;
 
-import legoshop.dao.IncomeDao;
 import legoshop.domain.*;
 import legoshop.service.IncomeItemService;
+import legoshop.service.IncomeService;
 import legoshop.service.OutcomeItemService;
 import legoshop.service.PartService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +19,7 @@ import java.util.Set;
 public class IncomeCreator {
 
     @Autowired
-    private IncomeDao incomeDao;
+    private IncomeService incomeService;
 
     @Autowired
     private IncomeItemService incomeItemService;
@@ -34,44 +34,24 @@ public class IncomeCreator {
     public void createIncome() {
         Set<IncomeItem> incomeItems = new HashSet<>();
         Long itemId = 2L;
-        IncomeItem incomeItem = createIncomeItem(itemId, 20);
+        IncomeItem incomeItem = createIncomeItem(itemId, 100);
         incomeItems.add(incomeItem);
 
         Income income = prepareIncome(incomeItems);
 
         incomeItem.setIncome(income);
 
-        Integer totalIncomeByPartId = countTotalIncomeByItemId(itemId);
-        Integer totalOutcomeByPartId = countTotalOutcomeByItemId(itemId);
+        OutcomeItem outcomeItem = createOutcomeItem(itemId, 20, OutcomeType.SELL);
+        OutcomeItem outcomeItem2 = createOutcomeItem(itemId, 30, OutcomeType.WRITE_OFF);
 
-        System.out.println("total income by part id " + itemId + " = " + totalIncomeByPartId);
-        System.out.println("total outcome by part_id " + itemId + " = " + totalOutcomeByPartId);
-        System.out.println("total qty by part_id" + itemId + " = " + (totalIncomeByPartId - totalOutcomeByPartId));
+        incomeService.putIncome(income);
 
-        OutcomeItem outcomeItem = createOutcomeItem(itemId, 66, OutcomeType.SELL);
-        OutcomeItem outcomeItem2 = createOutcomeItem(itemId, 21, OutcomeType.WRITE_OFF);
 
-        incomeDao.save(income);
         outcomeItemService.saveOutcomeItem(outcomeItem);
         outcomeItemService.saveOutcomeItem(outcomeItem2);
 
-        totalIncomeByPartId = countTotalIncomeByItemId(itemId);
-        totalOutcomeByPartId = countTotalOutcomeByItemId(itemId);
-        System.out.println("----------- after inserting");
-        System.out.println("total income by part id " + itemId + " = " + totalIncomeByPartId);
-        System.out.println("total outcome by part_id " + itemId + " = " + totalOutcomeByPartId);
-        System.out.println("total qty by part_id" + itemId + " = " + (totalIncomeByPartId - totalOutcomeByPartId));
     }
 
-    private Integer countTotalIncomeByItemId(Long itemId){
-        Set<IncomeItem> incomeItems = partService.getIncomeItemsById(itemId);
-        return incomeItemService.countTotalIncome(incomeItems);
-    }
-
-    private Integer countTotalOutcomeByItemId(Long itemId){
-        Set<OutcomeItem> outcomeItems = partService.getOutcomeItemsById(itemId);
-        return outcomeItemService.countTotalOutcome(outcomeItems);
-    }
 
     private OutcomeItem createOutcomeItem(Long itemId, Integer quantity, OutcomeType outcomeType) {
         OutcomeItem outcomeItem = new OutcomeItem();

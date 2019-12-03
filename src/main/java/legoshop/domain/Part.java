@@ -1,7 +1,6 @@
 package legoshop.domain;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import java.math.BigDecimal;
 import java.util.Set;
@@ -13,6 +12,10 @@ import java.util.Set;
 @Entity
 @Table(name="part")
 public class Part extends AbstractEntityWithImage {
+
+    @Version
+    @Column(name = "optlock", columnDefinition = "integer DEFAULT 0", nullable = false)
+    private int version = 0;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,7 +43,6 @@ public class Part extends AbstractEntityWithImage {
     @Column(name = "comment")
     private String comment;
 
-    @NotBlank
     @Column(name = "current_price")
     private BigDecimal currentPrice;
 
@@ -50,11 +52,8 @@ public class Part extends AbstractEntityWithImage {
     @Column(name = "available")
     private Boolean available;
 
-    @Column(name = "total_income")
-    private Integer totalIncome;
-
-    @Column(name = "total_outcome")
-    private Integer totalOutcome;
+    @Column(name = "quantity")
+    private Integer quantity;
 
     @OneToMany(mappedBy = "part", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<IncomeItem> incomes;
@@ -62,6 +61,14 @@ public class Part extends AbstractEntityWithImage {
     @OneToMany(mappedBy = "part", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<OutcomeItem> outcomes;
 
+
+    public Integer getTotalQuantity() {
+        return quantity;
+    }
+
+    public void setTotalQuantity(Integer quantity) {
+        this.quantity = quantity;
+    }
 
     public Long getId() {
         return id;
@@ -143,22 +150,6 @@ public class Part extends AbstractEntityWithImage {
         this.available = available;
     }
 
-    public Integer getTotalIncome() {
-        return totalIncome;
-    }
-
-    public void setTotalIncome(Integer totalIncome) {
-        this.totalIncome = totalIncome;
-    }
-
-    public Integer getTotalOutcome() {
-        return totalOutcome;
-    }
-
-    public void setTotalOutcome(Integer totalOutcome) {
-        this.totalOutcome = totalOutcome;
-    }
-
     public Set<IncomeItem> getIncomes() {
         return incomes;
     }
@@ -173,5 +164,21 @@ public class Part extends AbstractEntityWithImage {
 
     public void setOutcomes(Set<OutcomeItem> outcomes) {
         this.outcomes = outcomes;
+    }
+
+    public long getVersion() {
+        return version;
+    }
+
+    public void setVersion(int version) {
+        this.version = version;
+    }
+
+    public Integer getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
     }
 }

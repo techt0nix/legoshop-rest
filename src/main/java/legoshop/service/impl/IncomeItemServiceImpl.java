@@ -4,7 +4,7 @@ import legoshop.dao.IncomeItemDao;
 import legoshop.domain.IncomeItem;
 import legoshop.service.IncomeItemService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.Set;
 
@@ -12,7 +12,7 @@ import java.util.Set;
  * Реализация интерфейса IncomeItemService
  */
 
-@Component
+@Service
 public class IncomeItemServiceImpl implements IncomeItemService {
 
     @Autowired
