@@ -3,17 +3,21 @@ package legoshop.service.impl;
 import legoshop.dao.IncomeDao;
 import legoshop.domain.Income;
 import legoshop.domain.IncomeItem;
-import legoshop.domain.OutcomeItem;
 import legoshop.domain.Part;
-import legoshop.service.IncomeItemService;
-import legoshop.service.IncomeService;
-import legoshop.service.OutcomeItemService;
-import legoshop.service.PartService;
+import legoshop.service.*;
 import org.hibernate.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.Set;
+
+/**
+ * Реализация сервиса Income.
+ * Главный метод - putIncome.
+ * Основная задача - принять сформированный Income, далее пройтись по всему его IncomeItem's, подсчитать quantity,
+ * Далее запросить количество income и outcome по каждому из part и обновить значение totalQuantity в таблице part
+ */
 
 @Service
 public class IncomeServiceImpl implements IncomeService {
@@ -24,11 +28,10 @@ public class IncomeServiceImpl implements IncomeService {
     @Autowired
     private PartService partService;
 
-    @Autowired
-    private IncomeItemService incomeItemService;
 
     @Autowired
-    private OutcomeItemService outcomeItemService;
+    @Qualifier("inOutSetCounter")
+    private InOutCounter inOutCounter;
 
 
     @Transactional(rollbackFor = {ObjectNotFoundException.class})
@@ -38,22 +41,10 @@ public class IncomeServiceImpl implements IncomeService {
             Part part = incomeItem.getPart();
             Long partId = part.getId();
             Integer quantity = incomeItem.getQuantity();
-            Integer currentTotalQuantity = countTotalIncomeByItemId(partId) - countTotalOutcomeByItemId(partId);
+            Integer currentTotalQuantity = inOutCounter.countTotalIncome(partId) - inOutCounter.countTotalOutcome(partId);
             partService.updateQuantity(part, currentTotalQuantity + quantity);
         }
         incomeDao.save(income);
         return true;
     }
-
-
-    private Integer countTotalIncomeByItemId(Long itemId){
-        Set<IncomeItem> incomeItems = partService.getIncomeItemsById(itemId);
-        return incomeItemService.countTotalIncome(incomeItems);
-    }
-
-    private Integer countTotalOutcomeByItemId(Long itemId){
-        Set<OutcomeItem> outcomeItems = partService.getOutcomeItemsById(itemId);
-        return outcomeItemService.countTotalOutcome(outcomeItems);
-    }
-
 }

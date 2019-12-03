@@ -18,11 +18,9 @@ public class OutcomeItem {
     @Column(name = "id", insertable = false, updatable = false, nullable = false)
     private Long id;
 
-
-//    @ManyToOne
-//    @JoinColumn(name = "order_id")
-//    private Order order;
-
+    @ManyToOne
+    @JoinColumn(name = "outcome_id")
+    private Outcome outcome;
 
     @Column(name = "quantity")
     @NotNull
