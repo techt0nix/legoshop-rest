@@ -4,10 +4,8 @@ import legoshop.dao.IncomeDao;
 import legoshop.dao.IncomeItemDao;
 import legoshop.dao.OutcomeItemDao;
 import legoshop.dao.PartDao;
-import legoshop.domain.Income;
-import legoshop.domain.IncomeItem;
-import legoshop.domain.OutcomeItem;
-import legoshop.domain.OutcomeType;
+import legoshop.domain.*;
+import legoshop.service.PartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import java.util.Date;
@@ -32,6 +30,9 @@ public class IncomeCreator {
 
     @Autowired
     private PartDao partDao;
+
+    @Autowired
+    private PartService partService;
 
 
     public void createIncome() {
@@ -78,7 +79,8 @@ public class IncomeCreator {
 
     private OutcomeItem createOutcomeItem(Long itemId, Integer quantity, OutcomeType outcomeType) {
         OutcomeItem outcomeItem = new OutcomeItem();
-        outcomeItem.setItem_id(itemId);
+        Part part = partService.getPartById(itemId);
+        outcomeItem.setPart(part);
         outcomeItem.setQuantity(quantity);
         outcomeItem.setOutcomeType(outcomeType);
         return outcomeItem;
@@ -86,7 +88,8 @@ public class IncomeCreator {
 
     private IncomeItem createIncomeItem(Long itemId, Integer quantity) {
         IncomeItem incomeItem = new IncomeItem();
-        incomeItem.setItem_id(itemId);
+        Part part = partService.getPartById(itemId);
+        incomeItem.setPart(part);
         incomeItem.setQuantity(quantity);
         return incomeItem;
     }

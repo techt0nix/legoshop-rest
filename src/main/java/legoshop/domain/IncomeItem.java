@@ -5,7 +5,7 @@ import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
 /**
- * Entity продукта, который идёт в приём. Хранит себе id продукта, его количество в рамках данного прихода
+ * Entity продукта, который идёт в приём. Хранит себе Part продукта, его количество в рамках данного прихода
  * Привязан к определенному приходу (Income) через @ManyToOne
  */
 
@@ -18,13 +18,6 @@ public class IncomeItem {
     @Column(name = "id", insertable = false, updatable = false, nullable = false)
     private Long id;
 
-    /**
-     * поле для id самого продукта
-     */
-    @Column(name = "item_id")
-    @NotNull
-    private Long item_id;
-
     @ManyToOne
     @JoinColumn(name = "income_id")
     private Income income;
@@ -36,21 +29,22 @@ public class IncomeItem {
     @Column(name = "comment")
     private String comment;
 
+    @ManyToOne
+    private Part part;
+
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         IncomeItem that = (IncomeItem) o;
         return Objects.equals(id, that.id) &&
-                Objects.equals(item_id, that.item_id) &&
-                Objects.equals(income, that.income) &&
-                Objects.equals(quantity, that.quantity) &&
-                Objects.equals(comment, that.comment);
+                Objects.equals(quantity, that.quantity);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, item_id, income, quantity, comment);
+        return Objects.hash(id, quantity);
     }
 
     public Long getId() {
@@ -59,14 +53,6 @@ public class IncomeItem {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Long getItem_id() {
-        return item_id;
-    }
-
-    public void setItem_id(Long item_id) {
-        this.item_id = item_id;
     }
 
     public Income getIncome() {
@@ -91,5 +77,13 @@ public class IncomeItem {
 
     public void setComment(String comment) {
         this.comment = comment;
+    }
+
+    public Part getPart() {
+        return part;
+    }
+
+    public void setPart(Part part) {
+        this.part = part;
     }
 }

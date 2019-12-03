@@ -18,13 +18,6 @@ public class OutcomeItem {
     @Column(name = "id", insertable = false, updatable = false, nullable = false)
     private Long id;
 
-    /**
-     * поле для id самого продукта
-     */
-    @Column(name = "item_id")
-    @NotNull
-    private Long item_id;
-
 
 //    @ManyToOne
 //    @JoinColumn(name = "order_id")
@@ -41,6 +34,9 @@ public class OutcomeItem {
     @Enumerated(EnumType.STRING)
     private OutcomeType outcomeType;
 
+    @ManyToOne
+    private Part part;
+
 
     @Override
     public boolean equals(Object o) {
@@ -48,14 +44,12 @@ public class OutcomeItem {
         if (o == null || getClass() != o.getClass()) return false;
         OutcomeItem that = (OutcomeItem) o;
         return Objects.equals(id, that.id) &&
-                Objects.equals(item_id, that.item_id) &&
-                Objects.equals(quantity, that.quantity) &&
-                Objects.equals(comment, that.comment);
+                Objects.equals(quantity, that.quantity);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, item_id, quantity, comment);
+        return Objects.hash(id, quantity);
     }
 
     public Long getId() {
@@ -66,13 +60,6 @@ public class OutcomeItem {
         this.id = id;
     }
 
-    public Long getItem_id() {
-        return item_id;
-    }
-
-    public void setItem_id(Long item_id) {
-        this.item_id = item_id;
-    }
 
     public Integer getQuantity() {
         return quantity;
@@ -96,5 +83,13 @@ public class OutcomeItem {
 
     public void setOutcomeType(OutcomeType outcomeType) {
         this.outcomeType = outcomeType;
+    }
+
+    public Part getPart() {
+        return part;
+    }
+
+    public void setPart(Part part) {
+        this.part = part;
     }
 }

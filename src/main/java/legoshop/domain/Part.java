@@ -4,6 +4,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import java.math.BigDecimal;
+import java.util.Set;
 
 /**
  * Entity детали
@@ -54,6 +55,12 @@ public class Part extends AbstractEntityWithImage {
 
     @Column(name = "total_outcome")
     private Integer totalOutcome;
+
+    @OneToMany(mappedBy = "part", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<IncomeItem> incomes;
+
+    @OneToMany(mappedBy = "part", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<OutcomeItem> outcomes;
 
 
     public String getComment() {
@@ -150,5 +157,29 @@ public class Part extends AbstractEntityWithImage {
 
     public void setTotalOutcome(int totalOutcome) {
         this.totalOutcome = totalOutcome;
+    }
+
+    public void setTotalIncome(Integer totalIncome) {
+        this.totalIncome = totalIncome;
+    }
+
+    public void setTotalOutcome(Integer totalOutcome) {
+        this.totalOutcome = totalOutcome;
+    }
+
+    public Set<IncomeItem> getIncomes() {
+        return incomes;
+    }
+
+    public void setIncomes(Set<IncomeItem> incomes) {
+        this.incomes = incomes;
+    }
+
+    public Set<OutcomeItem> getOutcomes() {
+        return outcomes;
+    }
+
+    public void setOutcomes(Set<OutcomeItem> outcomes) {
+        this.outcomes = outcomes;
     }
 }

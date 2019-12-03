@@ -28,7 +28,7 @@ public class Category extends AbstractEntityWithImage {
     @Pattern(regexp = "^[^#$%^&*()']*$")
     private String rusName;
 
-    @OneToMany(mappedBy = "category", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "category", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
     private Set<Part> parts;
 
 

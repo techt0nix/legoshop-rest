@@ -46,6 +46,13 @@ public class PartServiceImpl implements PartService {
 
     @Transactional(readOnly = true)
     @Override
+    public Part getPartById(Long id) {
+        return partDao.findPartById(id);
+    }
+
+
+    @Transactional(readOnly = true)
+    @Override
     public List<Part> findPartsByColor(Long colorId, SortingValuesDTO sortingValues) {
         return null;
     }

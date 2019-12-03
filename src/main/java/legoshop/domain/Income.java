@@ -20,7 +20,7 @@ public class Income {
     @Column(name = "id", insertable = false, updatable = false, nullable = false)
     private Long id;
 
-    @OneToMany(mappedBy = "income", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "income", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<IncomeItem> items;
 
     @Column(name = "comment")

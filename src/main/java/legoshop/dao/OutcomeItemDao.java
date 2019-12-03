@@ -7,7 +7,7 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface OutcomeItemDao extends CrudRepository<OutcomeItem, Long>, JpaRepository<OutcomeItem, Long> {
 
-    @Query(value = "SELECT SUM(quantity) FROM outcome_item WHERE item_id = ?", nativeQuery = true)
+    @Query(value = "SELECT SUM(quantity) FROM outcome_item WHERE part_id = ?", nativeQuery = true)
     Integer countTotalOutcomeByItemId(Long itemId);
 
 }

@@ -7,6 +7,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
+import java.util.List;
+
 /**
  * Data Access Object для таблицы part
  */
@@ -14,11 +16,13 @@ import org.springframework.data.repository.CrudRepository;
 public interface PartDao extends CrudRepository<Part, Long>, JpaRepository<Part, Long> {
 
     @Query(value = "SELECT * FROM part WHERE category_id = ?", nativeQuery = true)
-    public Page<Part> findPartsByType(Long categoryId, Pageable pageable);
+    Page<Part> findPartsByType(Long categoryId, Pageable pageable);
 
+    @Query(value = "SELECT * FROM part WHERE id = ?", nativeQuery = true)
+    Part findPartById(Long id);
 
     /**
-     * Ищест совпадение в колонке eng_name или в part_number. Осуществляется засчет конкатенации этих двух колонок
+     * Ищет совпадение в колонке eng_name или в part_number. Осуществляется засчет конкатенации этих двух колонок
      * Для добваления дополнительных колонок для поиска добавить в функцию конкатенации эту самую колонку
      *
      * @param tag - тэг, по которому будет вестись поиск
@@ -26,21 +30,21 @@ public interface PartDao extends CrudRepository<Part, Long>, JpaRepository<Part,
      * @return
      */
     @Query(value = "SELECT * FROM part WHERE CONCAT(eng_name,' ', part_number) LIKE %?%", nativeQuery = true)
-    public Page<Part> searchParts(String tag, Pageable pageable);
+    Page<Part> searchParts(String tag, Pageable pageable);
 
 
     @Query(value = "SELECT total_income FROM part WHERE id = ?", nativeQuery = true)
-    public Integer getTotalIncomeByPartId(Long id);
+    Integer getTotalIncomeByPartId(Long id);
 
 
     @Query(value = "SELECT total_outcome FROM part WHERE id = ?", nativeQuery = true)
-    public Integer getTotalOutcomeByPartId(Long id);
+    Integer getTotalOutcomeByPartId(Long id);
 
 
     @Query(value = "UPDATE part SET total_income = ? WHERE id = ?", nativeQuery = true)
-    public void updateTotalIncomeByPartId(Integer totalIncome, Long id);
+    void updateTotalIncomeByPartId(Integer totalIncome, Long id);
 
 
     @Query(value = "UPDATE part SET total_outcome = ? WHERE id = ?", nativeQuery = true)
-    public void updateTotalOutcomeByPartId(Integer totalOutcome, Long id);
+    void updateTotalOutcomeByPartId(Integer totalOutcome, Long id);
 }
