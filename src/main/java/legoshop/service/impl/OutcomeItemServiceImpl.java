@@ -21,9 +21,9 @@ public class OutcomeItemServiceImpl implements OutcomeItemService {
 
     @Override
     public Integer countTotalOutcome(Set<OutcomeItem> outcomeItems) {
-        Integer totalCount = null;
+        Integer totalCount = 0;
         for (OutcomeItem outcomeItem : outcomeItems) {
-            totalCount =+ outcomeItem.getQuantity();
+            totalCount += outcomeItem.getQuantity();
         }
         return totalCount == null ? 0 : totalCount;
     }

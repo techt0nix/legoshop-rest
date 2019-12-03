@@ -25,6 +25,7 @@ public class CategoryServiceImpl implements CategoryService {
         return categoryDao.findAll();
     }
 
+
     @Transactional(readOnly = true)
     @Override
     public Category findTypeById(Long id) {

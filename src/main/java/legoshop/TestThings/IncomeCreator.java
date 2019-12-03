@@ -64,11 +64,13 @@ public class IncomeCreator {
     }
 
     private Integer countTotalIncomeByItemId(Long itemId){
-        return incomeItemService.countTotalIncomeByPartId(itemId);
+        Set<IncomeItem> incomeItems = partService.getIncomeItemsById(itemId);
+        return incomeItemService.countTotalIncome(incomeItems);
     }
 
     private Integer countTotalOutcomeByItemId(Long itemId){
-        return outcomeItemService.countTotalOutcomeByPartId(itemId);
+        Set<OutcomeItem> outcomeItems = partService.getOutcomeItemsById(itemId);
+        return outcomeItemService.countTotalOutcome(outcomeItems);
     }
 
     private OutcomeItem createOutcomeItem(Long itemId, Integer quantity, OutcomeType outcomeType) {

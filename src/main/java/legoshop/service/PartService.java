@@ -20,6 +20,8 @@ public interface PartService {
 
     Part getPartById(Long id);
 
+    Part getPartByPartNumber(String partNumber);
+
     Set<IncomeItem> getIncomeItemsById(Long id);
 
     Set<OutcomeItem> getOutcomeItemsById(Long id);

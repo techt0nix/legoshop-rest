@@ -7,8 +7,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
-import java.util.List;
-
 /**
  * Data Access Object для таблицы part
  */
@@ -18,8 +16,14 @@ public interface PartDao extends CrudRepository<Part, Long>, JpaRepository<Part,
     @Query(value = "SELECT * FROM part WHERE category_id = ?", nativeQuery = true)
     Page<Part> findPartsByType(Long categoryId, Pageable pageable);
 
+
     @Query(value = "SELECT * FROM part WHERE id = ?", nativeQuery = true)
     Part findPartById(Long id);
+
+
+    @Query(value = "SELECT * FROM part WHERE part_number = ?", nativeQuery = true)
+    Part findPartByPartNumber(String partNumber);
+
 
     /**
      * Ищет совпадение в колонке eng_name или в part_number. Осуществляется засчет конкатенации этих двух колонок

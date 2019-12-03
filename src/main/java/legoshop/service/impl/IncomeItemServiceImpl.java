@@ -21,9 +21,9 @@ public class IncomeItemServiceImpl implements IncomeItemService {
 
     @Override
     public Integer countTotalIncome(Set<IncomeItem> incomeItems) {
-        Integer totalCount = null;
+        Integer totalCount = 0;
         for (IncomeItem incomeItem : incomeItems) {
-            totalCount =+ incomeItem.getQuantity();
+            totalCount += incomeItem.getQuantity();
         }
         return totalCount == null ? 0 : totalCount;
     }
