@@ -13,14 +13,18 @@ import java.util.Objects;
 @Table(name="outcome_item")
 public class OutcomeItem {
 
+    @Version
+    @Column(name = "optlock", columnDefinition = "integer DEFAULT 0", nullable = false)
+    private int version = 0;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", insertable = false, updatable = false, nullable = false)
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "outcome_id")
-    private Outcome outcome;
+    @JoinColumn(name = "order_id")
+    private Order order;
 
     @Column(name = "quantity")
     @NotNull

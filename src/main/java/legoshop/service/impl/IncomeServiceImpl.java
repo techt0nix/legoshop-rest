@@ -35,14 +35,16 @@ public class IncomeServiceImpl implements IncomeService {
 
 
     @Transactional(rollbackFor = {ObjectNotFoundException.class})
+    @Override
     public boolean putIncome(Income income) {
         Set<IncomeItem> incomeItems = income.getItems();
         for (IncomeItem incomeItem : incomeItems) {
             Part part = incomeItem.getPart();
             Long partId = part.getId();
             Integer quantity = incomeItem.getQuantity();
-            Integer currentTotalQuantity = inOutCounter.countTotalIncome(partId) - inOutCounter.countTotalOutcome(partId);
-            partService.updateQuantity(part, currentTotalQuantity + quantity);
+            Integer currentTotalItemQuantity = inOutCounter.countTotalIncome(partId) - inOutCounter.countTotalOutcome(partId);
+            System.out.println("from inc: currenmt total item quantity: " + currentTotalItemQuantity);
+            partService.updateQuantity(part, currentTotalItemQuantity + quantity);
         }
         incomeDao.save(income);
         return true;

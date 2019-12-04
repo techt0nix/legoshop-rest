@@ -1,10 +1,7 @@
 package legoshop.TestThings;
 
 import legoshop.domain.*;
-import legoshop.service.IncomeItemService;
-import legoshop.service.IncomeService;
-import legoshop.service.OutcomeItemService;
-import legoshop.service.PartService;
+import legoshop.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import java.util.Date;
@@ -22,10 +19,7 @@ public class IncomeCreator {
     private IncomeService incomeService;
 
     @Autowired
-    private IncomeItemService incomeItemService;
-
-    @Autowired
-    private OutcomeItemService outcomeItemService;
+    private OrderService orderService;
 
     @Autowired
     private PartService partService;
@@ -36,31 +30,13 @@ public class IncomeCreator {
         Long itemId = 2L;
         IncomeItem incomeItem = createIncomeItem(itemId, 100);
         incomeItems.add(incomeItem);
-
         Income income = prepareIncome(incomeItems);
-
         incomeItem.setIncome(income);
-
-        OutcomeItem outcomeItem = createOutcomeItem(itemId, 20, OutcomeType.SELL);
-        OutcomeItem outcomeItem2 = createOutcomeItem(itemId, 30, OutcomeType.WRITE_OFF);
-
         incomeService.putIncome(income);
-
-
-        outcomeItemService.saveOutcomeItem(outcomeItem);
-        outcomeItemService.saveOutcomeItem(outcomeItem2);
-
     }
 
 
-    private OutcomeItem createOutcomeItem(Long itemId, Integer quantity, OutcomeType outcomeType) {
-        OutcomeItem outcomeItem = new OutcomeItem();
-        Part part = partService.getPartById(itemId);
-        outcomeItem.setPart(part);
-        outcomeItem.setQuantity(quantity);
-        outcomeItem.setOutcomeType(outcomeType);
-        return outcomeItem;
-    }
+
 
     private IncomeItem createIncomeItem(Long itemId, Integer quantity) {
         IncomeItem incomeItem = new IncomeItem();
@@ -76,4 +52,5 @@ public class IncomeCreator {
         income.setDate(new Date());
         return income;
     }
+
 }

@@ -13,6 +13,10 @@ import java.util.Objects;
 @Table(name = "income_item")
 public class IncomeItem {
 
+    @Version
+    @Column(name = "optlock", columnDefinition = "integer DEFAULT 0", nullable = false)
+    private int version = 0;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", insertable = false, updatable = false, nullable = false)
