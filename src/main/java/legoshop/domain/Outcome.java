@@ -13,7 +13,7 @@ public class Outcome {
     @Column(name = "id", insertable = false, updatable = false, nullable = false)
     private Long id;
 
-    @OneToMany(mappedBy = "outcome", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "outcome", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     private Set<OutcomeItem> items;
 
     @Column(name = "comment")

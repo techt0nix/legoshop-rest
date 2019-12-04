@@ -52,7 +52,7 @@ public class Part extends AbstractEntityWithImage {
     @Column(name = "available")
     private Boolean available;
 
-    @Column(name = "quantity")
+    @Column(name = "quantity", columnDefinition = "integer DEFAULT 0", nullable = false)
     private Integer quantity;
 
     @OneToMany(mappedBy = "part", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
