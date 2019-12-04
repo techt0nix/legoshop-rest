@@ -11,84 +11,118 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous" ></script>
 
 
-    <div class="list-group" th:each="category : ${categories}">
-        <a th:href="@{|/category/${category.id}|}" class="list-group-item list-group-item-action" th:text="${category.engName}"></a>
+    <nav class="navbar navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">Menu</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Delivery</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Categories
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <div  th:each="category : ${categories}">
+                            <a class="dropdown-item" th:href="@{|/category/${category.id}|}" th:text="${category.engName}"></a>
+                        </div>
+                    </div>
+                    <div class="dropdown-divider"></div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link disabled" href="#">About</a>
+                </li>
+            </ul>
+            <form class="form-inline my-2 my-lg-0" method="post" th:action="@{/search/}">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="tag" action="search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </form>
+        </div>
+    </nav>
+
+    <div class="jumbotron">
+        <h1 class="display-4">Hello, guest!</h1>
+        <p class="lead">This is my Legoshop</p>
+        <hr class="my-4">
+        <p>You can select the categories in the main menu and observe the list of parts and etc.</p>
+        <p class="lead">
+            <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
+        </p>
     </div>
 
+    <div class="container">
+        <div class="row">
+            <div class="dropdown">
+                <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="sortOptionsMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Сортировать
+                </a>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                    <div th:each="sortOption: ${sortOptions}">
+                        <a class="dropdown-item" th:href="@{|/category/${categoryId}?page=0&sort=${sortOption.key}|}" tabindex="-1" th:text="${sortOption.value}"></a>
+                    </div>
+                </div>
+            </div>
 
-    <table border = "1">
-        <tbody>
-            <tr th:each="model, iterStat: ${parts}" th:class="${iterStat.odd}? 'odd'">
-                <td th:text="${model.id}"></td>
-                <td th:text="${model.engName}"></td>
-                <td th:text="${model.rusName}"></td>
-                <td th:text="${model.currentPrice}"></td>
-                <td th:text="${model.oldPrice}"></td>
-                <td th:text="${model.partNumber}"></td>
-                <td th:text="${model.quantity}"></td>
-                <td>
-                    <img th:src="|data:image/jpg;base64,${images[iterStat.index]}|"/>
-                </td>
+            <div class="dropdown">
+                <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="sortDirectionMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Порядок
+                </a>
 
-            </tr>
-        </tbody>
-    </table>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                    <div th:each="direction: ${directions}">
+                        <a class="dropdown-item" th:href="@{|/category/${categoryId}?page=0&direction=${direction.key}|}" tabindex="-1" th:text="${direction.value}"></a>
+                    </div>
+                </div>
+            </div>
 
+            <div class="dropdown">
+                <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="showMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Показывать
+                </a>
 
-    <form method="post" th:action="@{/search/}">
-        <input category="text" name="tag" action="search">
-        <button category="submit">Найти</button>
-    </form>
-
-
-    <div class="dropdown">
-        <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="sortOptionsMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Сортировать
-        </a>
-
-        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-            <div th:each="sortOption: ${sortOptions}">
-                <a class="dropdown-item" th:href="@{|/category/${categoryId}?page=0&sort=${sortOption.key}|}" tabindex="-1" th:text="${sortOption.value}"></a>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                    <div th:each="pageSize: ${pageSizes}">
+                        <a class="dropdown-item" th:href="@{|/category/${categoryId}?page=0&size=${pageSize.key}|}" tabindex="-1" th:text="${pageSize.value}"></a>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
 
-
-    <div class="dropdown">
-        <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="sortDirectionMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Порядок
-        </a>
-
-        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-            <div th:each="direction: ${directions}">
-                <a class="dropdown-item" th:href="@{|/category/${categoryId}?page=0&direction=${direction.key}|}" tabindex="-1" th:text="${direction.value}"></a>
+        <div class="row">
+            <div class="card-deck" th:each="model, iterStat: ${parts}" th:class="${iterStat.odd}? 'odd'">
+                <div class="card" style="width: 13rem;">
+                    <img class="card-img-top" th:src="|data:image/jpg;base64,${images[iterStat.index]}|" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title" th:text="${model.partNumber}"></h5>
+                        <p class="card-text" th:text="${model.engName}"></p>
+                        <p class="card-text" >Quantity: <span th:text="${model.quantity}"></span></p>
+                        <p class="card-text" >Id: <span th:text="${model.id}"></span></p>
+                        <div class="row">
+                            <div class="col-6" style="float: right">
+                                <a href="#" class="btn btn-success">Add to cart</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
+
+        <ul class="pagination">
+            <li class="page-item disabled">
+                <a class="page-link" href="#" tabindex="-1">Страницы</a>
+            </li>
+
+            <li class="page-item active" th:each="pageNumber : ${pageNumbers}">
+                <a class="page-link" th:href="@{|/category/${typeId}?page=${pageNumber-1}|}" tabindex="-1" th:text=${pageNumber}></a>
+            </li>
+        </ul>
     </div>
-
-
-    <div class="dropdown">
-        <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="showMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Показывать
-        </a>
-
-        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-            <div th:each="pageSize: ${pageSizes}">
-                <a class="dropdown-item" th:href="@{|/category/${categoryId}?page=0&size=${pageSize.key}|}" tabindex="-1" th:text="${pageSize.value}"></a>
-            </div>
-        </div>
-    </div>
-
-
-    <ul class="pagination">
-        <li class="page-item disabled">
-            <a class="page-link" href="#" tabindex="-1">Страницы</a>
-        </li>
-
-        <li class="page-item active" th:each="pageNumber : ${pageNumbers}">
-            <a class="page-link" th:href="@{|/category/${typeId}?page=${pageNumber-1}|}" tabindex="-1" th:text=${pageNumber}></a>
-        </li>
-    </ul>
-
 </body>
 </html>
