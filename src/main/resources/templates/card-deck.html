@@ -12,8 +12,16 @@
                         <p class="card-text" >Quantity: <span th:text="${model.quantity}"></span></p>
                         <p class="card-text" >Id: <span th:text="${model.id}"></span></p>
                         <div class="row">
+
+
                             <div class="col-6" style="float: right">
-                                <a href="#" class="btn btn-success">Add to cart</a>
+                                <form action="#" th:action="@{|/cart/add/${model.id}|}" method="post">
+                                    <div>
+                                        <input type="number" class="form-control text-center" value="1" name="quantity" >
+                                    </div>
+                                    <input type="submit" class="btn btn-success" value="Add to cart">
+                                </form>
+                                <!--<a href="#" class="btn btn-success">Add to cart</a>-->
                             </div>
                         </div>
                     </div>

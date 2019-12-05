@@ -1,15 +1,15 @@
 package legoshop.controller.frontend;
 
-import legoshop.domain.CartItem;
 import legoshop.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import javax.servlet.http.HttpSession;
-import java.util.HashSet;
-import java.util.Set;
+
 
 @Controller
 @RequestMapping("/cart")
@@ -20,6 +20,15 @@ public class CartController {
 
     @RequestMapping(method = RequestMethod.GET)
     public String getCart(Model model, HttpSession httpSession) {
+        model.addAttribute("categories", categoryService.findAll());
+        return "cart";
+    }
+
+    @RequestMapping(value = "/add/{id}", method = RequestMethod.POST)
+    public String addToCart(@PathVariable Long id,
+                            @RequestParam int quantity,
+                            Model model) {
+
         model.addAttribute("categories", categoryService.findAll());
         return "cart";
     }
