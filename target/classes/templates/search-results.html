@@ -11,84 +11,58 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous" ></script>
 
 
-    <div class="list-group" th:each="category : ${categories}">
-        <a th:href="@{|/category/${category.id}|}" class="list-group-item list-group-item-action" th:text="${category.engName}"></a>
-    </div>
+    <div th:insert="~{navbar :: navbar}"></div>
+    <div th:insert="~{display :: display}"></div>
 
+    <div class="container">
+        <div class="row">
+            <div class="dropdown">
+                <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="sortOptionsMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Сортировать
+                </a>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                    <div th:each="sortOption: ${sortOptions}">
+                        <a class="dropdown-item" th:href="@{|/search/tag=${tag}?page=0&sort=${sortOption.key}|}" tabindex="-1" th:text="${sortOption.value}"></a>
+                    </div>
+                </div>
+            </div>
 
-    <table border = "1">
-        <tbody>
-        <tr th:each="model, iterStat: ${parts}" th:class="${iterStat.odd}? 'odd'">
-            <td th:text="${model.id}"></td>
-            <td th:text="${model.engName}"></td>
-            <td th:text="${model.rusName}"></td>
-            <td th:text="${model.currentPrice}"></td>
-            <td th:text="${model.oldPrice}"></td>
-            <td th:text="${model.partNumber}"></td>
-            <td th:text="${model.quantity}"></td>
-            <td>
-                <img th:src="|data:image/jpg;base64,${images[iterStat.index]}|"/>
-            </td>
+            <div class="dropdown">
+                <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="sortDirectionMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Порядок
+                </a>
 
-        </tr>
-        </tbody>
-    </table>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                    <div th:each="direction: ${directions}">
+                        <a class="dropdown-item" th:href="@{|/search/tag=${tag}?page=0&direction=${direction.key}|}" tabindex="-1" th:text="${direction.value}"></a>
+                    </div>
+                </div>
+            </div>
 
+            <div class="dropdown">
+                <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="showMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Показывать
+                </a>
 
-    <form method="post" th:action="@{/search/}">
-        <input category="text" name="tag" action="search">
-        <button category="submit">Найти</button>
-    </form>
-
-
-    <div class="dropdown">
-        <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="sortOptionsMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Сортировать
-        </a>
-
-        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-            <div th:each="sortOption: ${sortOptions}">
-                <a class="dropdown-item" th:href="@{|/search/tag=${tag}?page=0&sort=${sortOption.key}|}" tabindex="-1" th:text="${sortOption.value}"></a>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                    <div th:each="pageSize: ${pageSizes}">
+                        <a class="dropdown-item" th:href="@{|/search/tag=${tag}?page=0&size=${pageSize.key}|}" tabindex="-1" th:text="${pageSize.value}"></a>
+                    </div>
+                </div>
             </div>
         </div>
+
+        <div th:insert="~{card-deck :: card-deck}"></div>
+
+        <ul class="pagination">
+            <li class="page-item disabled">
+                <a class="page-link" href="#" tabindex="-1">Страницы</a>
+            </li>
+
+            <li class="page-item active" th:each="pageNumber : ${pageNumbers}">
+                <a class="page-link" th:href="@{|/search/tag=${tag}?page=${pageNumber-1}|}" tabindex="-1" th:text=${pageNumber}></a>
+            </li>
+        </ul>
     </div>
-
-
-    <div class="dropdown">
-        <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="sortDirectionMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Порядок
-        </a>
-
-        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-            <div th:each="direction: ${directions}">
-                <a class="dropdown-item" th:href="@{|/search/tag=${tag}?page=0&direction=${direction.key}|}" tabindex="-1" th:text="${direction.value}"></a>
-            </div>
-        </div>
-    </div>
-
-
-    <div class="dropdown">
-        <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="showMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Показывать
-        </a>
-
-        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-            <div th:each="pageSize: ${pageSizes}">
-                <a class="dropdown-item" th:href="@{|/search/tag=${tag}?page=0&size=${pageSize.key}|}" tabindex="-1" th:text="${pageSize.value}"></a>
-            </div>
-        </div>
-    </div>
-
-
-    <ul class="pagination">
-        <li class="page-item disabled">
-            <a class="page-link" href="#" tabindex="-1">Страницы</a>
-        </li>
-
-        <li class="page-item active" th:each="pageNumber : ${pageNumbers}">
-            <a class="page-link" th:href="@{|/search/tag=${tag}?page=${pageNumber-1}|}" tabindex="-1" th:text=${pageNumber}></a>
-        </li>
-    </ul>
-
 </body>
 </html>
