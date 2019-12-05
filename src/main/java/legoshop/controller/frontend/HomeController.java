@@ -46,7 +46,7 @@ public class HomeController {
     public String index(Model model) {
         List<Category> categoriesList = categoryService.findAll();
         List<String> base64List = blobDecoder.getBase64List(categoriesList);
-        model.addAttribute("categoris", categoriesList);
+        model.addAttribute("categories", categoriesList);
         model.addAttribute("images", base64List);
         return "index";
     }

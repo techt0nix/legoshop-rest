@@ -40,7 +40,7 @@ public class BlobUploader {
                 fis.read(content);
                 fis.close();
 
-                PreparedStatement preparedStatement = con.prepareStatement(partBlobQuery);
+                PreparedStatement preparedStatement = con.prepareStatement(categoryBlobQuery);
                 preparedStatement.setBytes(1, content);
                 preparedStatement.setString(2,fileName);
 
