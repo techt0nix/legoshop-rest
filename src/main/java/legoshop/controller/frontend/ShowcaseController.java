@@ -15,10 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.servlet.http.HttpSession;
-import java.util.List;
-import java.util.Set;
-
 /**
  * Контроллер витрины. Отвечает за обработку запросов с id типа на /category
  */
