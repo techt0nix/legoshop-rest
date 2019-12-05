@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+    <div th:fragment="card-deck">
+        <div class="row">
+            <div class="card-deck" th:each="model, iterStat: ${parts}" th:class="${iterStat.odd}? 'odd'">
+                <div class="card" style="width: 13rem;">
+                    <img class="card-img-top" th:src="|data:image/jpg;base64,${images[iterStat.index]}|" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title" th:text="${model.partNumber}"></h5>
+                        <p class="card-text" th:text="${model.engName}"></p>
+                        <p class="card-text" >Quantity: <span th:text="${model.quantity}"></span></p>
+                        <p class="card-text" >Id: <span th:text="${model.id}"></span></p>
+                        <div class="row">
+                            <div class="col-6" style="float: right">
+                                <a href="#" class="btn btn-success">Add to cart</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

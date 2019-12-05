@@ -22,7 +22,7 @@ import java.util.Map;
 public class AbstractSorter implements Sorter {
 
     private final Integer firstPageDefault = 0;
-    private final Integer pageSizeDefault = 2;
+    private final Integer pageSizeDefault = 10;
     private final String sortDefault = "id";
     private final String directionDefault = "asc";
 
@@ -37,6 +37,7 @@ public class AbstractSorter implements Sorter {
         pageSizeOptions.put(1, "Показывать по 1");
         pageSizeOptions.put(2, "Показывать по 2");
         pageSizeOptions.put(5, "Показывать по 5");
+        pageSizeOptions.put(10, "Показывать по 10");
     }
 
     private Integer pageNumber;
