@@ -3,7 +3,9 @@ package legoshop.controller.frontend;
 import legoshop.domain.Cart;
 import legoshop.domain.CartItem;
 import legoshop.domain.Part;
-import legoshop.dto.CartItemDto;
+import legoshop.dto.AddToCartItemDto;
+import legoshop.dto.CartDto;
+import legoshop.dto.DtoAssembler.CartDtoAssembler;
 import legoshop.service.CategoryService;
 import legoshop.service.PartService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,9 @@ public class CartController {
     @Autowired
     private PartService partService;
 
+    @Autowired
+    private CartDtoAssembler cartDtoAssembler;
+
 
     @RequestMapping(method = RequestMethod.GET)
     public String getCart(Model model, HttpSession httpSession) {
@@ -39,10 +44,10 @@ public class CartController {
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     @ResponseBody
-    public String add(@RequestBody CartItemDto cartItemDto, HttpSession httpSession) {
-        System.out.println("ITEM ID : " + cartItemDto.getItemId());
-        System.out.println("QUANITITY : " + cartItemDto.getQuantity());
-        Cart cart = updateCart(cartItemDto, httpSession);
+    public String add(@RequestBody AddToCartItemDto addToCartItemDto, HttpSession httpSession) {
+        System.out.println("ITEM ID : " + addToCartItemDto.getItemId());
+        System.out.println("QUANITITY : " + addToCartItemDto.getQuantity());
+        Cart cart = updateCart(addToCartItemDto, httpSession);
         return cart.getTotalItems().toString();
     }
 
@@ -54,11 +59,19 @@ public class CartController {
         return (cart == null) ? "0" : cart.getTotalItems().toString();
     }
 
-    private Cart updateCart(CartItemDto cartItemDto, HttpSession httpSession) {
+    @RequestMapping(value = "/restcart", method = RequestMethod.GET)
+    @ResponseBody
+    public CartDto restcart(HttpSession httpSession) {
+        Cart cart = (Cart) httpSession.getAttribute("cart");
+        return cartDtoAssembler.toAnonymousResource(cart);
+    }
+
+
+    private Cart updateCart(AddToCartItemDto addToCartItemDto, HttpSession httpSession) {
         Cart cart = retrieveCart(httpSession);
 
-        Part part = partService.getPartById(cartItemDto.getItemId());
-        Integer quantity = cartItemDto.getQuantity();
+        Part part = partService.getPartById(addToCartItemDto.getItemId());
+        Integer quantity = addToCartItemDto.getQuantity();
 
         cart.update(part, quantity);
         httpSession.setAttribute("cart", cart);

@@ -11,7 +11,7 @@
 
                 var siblings = $(this).siblings("div.control-form");
 
-                var cartItem = {
+                var addToCartItem = {
                     itemId: $(this).attr("id"),
                     quantity: siblings[0].lastElementChild.value
                 }
@@ -20,7 +20,7 @@
                     type : "POST",
                     contentType : "application/json",
                     url : '/cart/add',
-                    data: JSON.stringify(cartItem),
+                    data: JSON.stringify(addToCartItem),
                     success : function(data) {
                         console.log(data);
                         $("#cart-counter").text(data);

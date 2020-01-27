@@ -1,6 +1,7 @@
 package legoshop.domain;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -59,11 +60,19 @@ public class Cart {
 
     private void revalidateCartMetrics() {
         int total = 0;
+        int productsCost = 0;
 
         for (CartItem item : getCartItems()) {
             total += item.getQuantity();
+            BigDecimal itemPrice = item.getPart().getCurrentPrice();
+
+            if (itemPrice != null) {
+                if (itemPrice.intValue() > 0)
+                    productsCost += item.getQuantity() * itemPrice.intValue();
+            }
         }
         setTotalItems(total);
+        setProductsCost(productsCost);
     }
 
 

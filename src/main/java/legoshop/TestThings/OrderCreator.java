@@ -26,10 +26,8 @@ public class OrderCreator {
     public void createOrder() {
         Long itemId = 2L;
         OutcomeItem outcomeItem = createOutcomeItem(itemId, 20, OutcomeType.SELL);
-//        OutcomeItem outcomeItem2 = createOutcomeItem(itemId, 30, OutcomeType.WRITE_OFF);
         Set<OutcomeItem> outcomeItems = new HashSet<>();
         outcomeItems.add(outcomeItem);
-//        outcomeItems.add(outcomeItem2);
         Order order = prepareOrder(outcomeItems);
         orderService.putOrder(order);
     }
