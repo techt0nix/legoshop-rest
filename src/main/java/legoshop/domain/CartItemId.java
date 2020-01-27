@@ -18,6 +18,11 @@ public class CartItemId implements Serializable {
 
     }
 
+    public CartItemId(Long cartId, Long partId) {
+        this.cartId = cartId;
+        this.partId = partId;
+    }
+
     public Long getCartId() {
         return cartId;
     }

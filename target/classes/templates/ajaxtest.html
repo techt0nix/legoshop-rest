@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script>
+        <!--$(document).ready(function() {-->
+            <!--$("#id_get_time").click(function() {-->
+            <!--var input = $("#quantity").val();-->
+
+            <!--alert(input);-->
+
+
+                <!--$.ajax({-->
+                    <!--url : 'add',-->
+                    <!--data : ({-->
+                        <!--chislo: input-->
+                    <!--}),-->
+                    <!--success : function(data) {-->
+                        <!--&lt;!&ndash;$("#id_time").html(data);&ndash;&gt;-->
+                    <!--}-->
+                <!--});-->
+            <!--});-->
+        <!--});-->
+
+        <!--$(document).ready(function() {-->
+            <!--$("#id_get_time").click(function() {-->
+            <!--var input = $("#quantity").val();-->
+
+            <!--var obj = {-->
+                <!--partId: $("#quantity").val(),-->
+                <!--partNumber: "Saitwal"-->
+            <!--}-->
+
+                <!--$.ajax({-->
+                    <!--url : 'add',-->
+                    <!--method : "POST",-->
+                    <!--contentType: "application/json",-->
+                    <!--data: JSON.stringify(obj),-->
+                    <!--success : function(data) {-->
+                        <!--&lt;!&ndash;$("#id_time").html(data);&ndash;&gt;-->
+                        <!--$("#blow").html(data.partNumber);-->
+                    <!--}-->
+                <!--});-->
+            <!--});-->
+        <!--});-->
+
+        <!--$(document).ready(function(){-->
+	        <!--$(".btn btn-success").click(function(evt){-->
+	            <!--alert($(this).attr("id"));-->
+	        <!--});-->
+        <!--});-->
+
+       $(document).ready(function(){
+
+            $(".btn.btn-success").click(function()
+      {
+       var id = $(this).attr('id');
+        alert(id);
+      });
+    });
+
+    </script>
+</head>
+<body>
+
+    <button id="cartadd" class="btn btn-success" value="Add to cart" >Add to cart</button>
+
+
+    <button id="id_get_time" class="kek">Get time!</button> <br/>
+    <p id="id_time"></p>
+
+    <p id="blow" th:text="${itemId}"></p>
+
+
+</body>
+</html>

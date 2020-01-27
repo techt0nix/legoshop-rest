@@ -27,6 +27,12 @@ public class CartItem {
     public CartItem() {
     }
 
+    public CartItem(Cart cart, Part part, Integer quantity) {
+        this.cart = cart;
+        this.part = part;
+        this.quantity = quantity;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

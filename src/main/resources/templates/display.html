@@ -7,9 +7,19 @@
             <p class="lead">This is my Legoshop</p>
             <hr class="my-4">
             <p>You can select the categories in the main menu and observe the list of parts and etc.</p>
+            <script type="text/javascript" th:inline="javascript">
+                $.ajax({
+                    type : "GET",
+                    contentType : "application/json",
+                    url : '/cart/getTotalCount',
+                    success : function(data) {
+                        $("#cart-counter").text(data);
+                    }
+                });
+            </script>
             <p class="lead">
                 <a class="btn btn-primary btn-lg" th:href="@{|/cart|}" role="button">To cart
-                    <span class="badge badge-light">55</span>
+                    <span class="badge badge-light" id="cart-counter">0</span>
                 </a>
             </p>
         </div>

@@ -1,29 +1,31 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+<head>
+
+</head>
 <body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
     <div th:fragment="card-deck">
         <div class="row">
             <div class="card-deck" th:each="model, iterStat: ${parts}" th:class="${iterStat.odd}? 'odd'">
                 <div class="card" style="width: 13rem;">
                     <img class="card-img-top" th:src="|data:image/jpg;base64,${images[iterStat.index]}|" alt="Card image cap">
                     <div class="card-body">
-                        <h5 class="card-title" th:text="${model.partNumber}"></h5>
+                        <h5 class="card-title" th:text="${model.partNumber}" id="partnumber"></h5>
                         <p class="card-text" th:text="${model.engName}"></p>
                         <p class="card-text" >Quantity: <span th:text="${model.quantity}"></span></p>
                         <p class="card-text" >Id: <span th:text="${model.id}"></span></p>
+
                         <div class="row">
-
-
                             <div class="col-6" style="float: right">
-                                <form action="#" th:action="@{|/cart/add/${model.id}|}" method="post">
-                                    <div>
-                                        <input type="number" class="form-control text-center" value="1" name="quantity" >
-                                    </div>
-                                    <input type="submit" class="btn btn-success" value="Add to cart">
-                                </form>
-                                <!--<a href="#" class="btn btn-success">Add to cart</a>-->
+                                <div class="control-form">
+                                    <input type="number" class="form-control text-center" value="1" name="quantity" >
+                                </div>
+                                <button th:id="${model.id}" class="btn btn-success" value="Add to cart" name="add-to-cart">Add to cart</button>
                             </div>
                         </div>
+
                     </div>
                 </div>
             </div>
