@@ -6,6 +6,7 @@ import legoshop.domain.Part;
 import legoshop.dto.AddToCartItemDto;
 import legoshop.dto.CartDto;
 import legoshop.dto.DtoAssembler.CartDtoAssembler;
+import legoshop.service.BlobDecoder;
 import legoshop.service.CategoryService;
 import legoshop.service.PartService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 @RequestMapping("/cart")
@@ -27,13 +30,20 @@ public class CartController {
     @Autowired
     private CartDtoAssembler cartDtoAssembler;
 
+    @Autowired
+    private BlobDecoder blobDecoder;
+
 
     @RequestMapping(method = RequestMethod.GET)
     public String getCart(Model model, HttpSession httpSession) {
         Cart cart = retrieveCart(httpSession);
-
+        List<Part> partList = new ArrayList<>();
+        for (CartItem cartItem : cart.getCartItems()) {
+            partList.add(cartItem.getPart());
+        }
+        model.addAttribute("images", blobDecoder.getBase64List(partList));
         model.addAttribute("categories", categoryService.findAll());
-        model.addAttribute("cart-list", cart);
+        model.addAttribute("cart", cart);
         System.out.println("total items in cart : " + cart.getTotalItems());
         for (CartItem cartItem : cart.getCartItems()) {
             System.out.println("Item : " + cartItem.getPart().getPartNumber() + " | Quantity : " + cartItem.getQuantity());
