@@ -7,25 +7,69 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script th:inline="javascript">
         $(document).ready(function(){
-            $("button[name$='add-to-cart']").click(function(evt){
 
-                var siblings = $(this).siblings("div.control-form");
+            function getCartData() {
+                return JSON.parse(localStorage.getItem('cart'));
+            }
 
-                var addToCartItem = {
-                    itemId: $(this).attr("id"),
-                    quantity: siblings[0].lastElementChild.value
+            function setCartData(o) {
+                localStorage.setItem('cart', JSON.stringify(o));
+                return false;
+            }
+
+            function addToCart(item) {
+                cartData = getCartData() || {};
+                if (cartData.hasOwnProperty(item.itemId)) {
+                    cartData[item.itemId].quantity = parseInt(item.quantity) + parseInt(cartData[item.itemId].quantity);
+                } else {
+                    cartData[item.itemId] = item;
                 }
 
-                $.ajax({
-                    type : "POST",
-                    contentType : "application/json",
-                    url : '/cart/add',
-                    data: JSON.stringify(addToCartItem),
-                    success : function(data) {
-                        console.log(data);
-                        $("#cart-counter").text(data);
-                    }
-                });
+                setCartData(cartData);
+            }
+
+            function clearCart() {
+                cartData = getCartData() || {};
+                if (cartData != null) {
+                    cartData = {};
+                }
+                setCartData(cartData);
+            }
+
+
+            $("button[name$='add-to-cart']").click(function(evt){
+                $(this).prop('disabled', true);
+
+                var buttonSibling = $(this).siblings("div.control-form");
+
+                var parentBox = $(this).parent().parent();
+                var availableSibling = parentBox.siblings("#available");
+
+                var item = {
+                    itemId: $(this).attr("id"),
+                    quantity: parseInt(buttonSibling[0].lastElementChild.value),
+                    partNumber: parentBox.siblings("#partnumber").text(),
+                    engName: parentBox.siblings("#engname").text(),
+                    available: parseInt(availableSibling[0].lastElementChild.innerText)
+                }
+
+                addToCart(item);
+
+                console.log(getCartData());
+
+                $(this).prop('disabled', false);
+
+
+                <!--$.ajax({-->
+                    <!--type : "POST",-->
+                    <!--contentType : "application/json",-->
+                    <!--url : '/cart/add',-->
+                    <!--data: JSON.stringify(addToCartItem),-->
+                    <!--success : function(data) {-->
+                        <!--console.log(data);-->
+                        <!--$("#cart-counter").text(data);-->
+                    <!--}-->
+                <!--});-->
             });
         });
     </script>
