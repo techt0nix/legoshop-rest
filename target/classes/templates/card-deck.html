@@ -5,7 +5,6 @@
 </head>
 <body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-
     <div th:fragment="card-deck">
         <div class="row">
             <div class="card-deck" th:each="model, iterStat: ${parts}" th:class="${iterStat.odd}? 'odd'">

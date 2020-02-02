@@ -17,16 +17,16 @@
 
             var cartData = getCartData();
 
-            for (itemId in cartData) {
-                console.log(cartData[itemId].partNumber);
+            for (itemId in cartData.items) {
+                console.log(cartData.items[itemId].partNumber);
             }
 
-            console.log(Object.keys(cartData).length);
+            console.log(Object.keys(cartData.items).length);
 
             var table = '<div class="container"><table id="cart" class="table table-hover table-condensed"><thead><tr><th style="width:50%">Product</th><th style="width:10%">Price</th><th style="width:8%">Quantity</th><th style="width:22%" class="text-center">Subtotal</th><th style="width:10%"></th></tr></thead><tbody>';
 
-            for (itemId in cartData) {
-                table += '<tr><td data-th="Product"><div class="col-sm-2 hidden-xs"><img src="' + cartData[itemId].image + '" alt="..." class="img-responsive" width="80" height="80"/></div><div class="col-sm-10"><h4 class="nomargin">' + cartData[itemId].itemId + '</h4><p>' + cartData[itemId].engName + '</p></div></td><td data-th="Price"></td><td data-th="Quantity"><input type="number" class="form-control text-center" value="' + cartData[itemId].quantity + '"></td><td data-th="Subtotal" class="text-center">1.99</td><td class="actions" data-th=""><button class="btn btn-info btn-sm"><i class="fa fa-refresh"></i></button><button class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i></button></td></tr>';
+            for (itemId in cartData.items) {
+                table += '<tr><td data-th="Product"><div class="col-sm-2 hidden-xs"><img src="' + cartData.items[itemId].image + '" alt="..." class="img-responsive" width="80" height="80"/></div><div class="col-sm-10"><h4 class="nomargin">' + cartData.items[itemId].itemId + '</h4><p>' + cartData.items[itemId].engName + '</p></div></td><td data-th="Price"></td><td data-th="Quantity"><input type="number" class="form-control text-center" value="' + cartData.items[itemId].quantity + '"></td><td data-th="Subtotal" class="text-center">1.99</td><td class="actions" data-th=""><button class="btn btn-info btn-sm"><i class="fa fa-refresh"></i></button><button class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i></button></td></tr>';
             }
 
             table += '</tbody><tfoot><tr><td><a th:href="@{|/|}" class="btn btn-warning"><i class="fa fa-angle-left"></i> Continue Shopping</a></td><td colspan="2" class="hidden-xs"></td><td class="hidden-xs text-center"><strong>Total $1.99</strong></td><td><a href="#" class="btn btn-success btn-block">Checkout <i class="fa fa-angle-right"></i></a></td></tr></tfoot></table></div>'

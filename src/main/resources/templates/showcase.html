@@ -8,6 +8,16 @@
     <script th:inline="javascript">
         $(document).ready(function(){
 
+            function createCart() {
+                cart = {
+                    items: {},
+                    totalItems: parseInt(0),
+                    totalCost: parseInt(0)
+                }
+                setCartData(cart);
+                return cart;
+            }
+
             function getCartData() {
                 return JSON.parse(localStorage.getItem('cart'));
             }
@@ -17,23 +27,34 @@
                 return false;
             }
 
-            function addToCart(item) {
-                cartData = getCartData() || {};
-                if (cartData.hasOwnProperty(item.itemId)) {
-                    cartData[item.itemId].quantity = parseInt(item.quantity) + parseInt(cartData[item.itemId].quantity);
-                } else {
-                    cartData[item.itemId] = item;
+            function quantityIsValid(qtyToAdd) {
+                if (qtyToAdd <= 0) {
+                    return false;
                 }
+                return true;
+            }
 
-                setCartData(cartData);
+            function addToCart(item) {
+                cartData = getCartData() || createCart();
+
+                if (quantityIsValid(item.quantity)) {
+                    if (cartData.items.hasOwnProperty(item.itemId)) {
+                        cartData.items[item.itemId].quantity = parseInt(item.quantity) + parseInt(cartData.items[item.itemId].quantity);
+                    } else {
+                        cartData.items[item.itemId] = item;
+                    }
+
+                    cartData.totalItems += parseInt(item.quantity);
+                    $("#cart-counter").text(cartData.totalItems);
+                    setCartData(cartData);
+                }
             }
 
             function clearCart() {
-                cartData = getCartData() || {};
-                if (cartData != null) {
-                    cartData = {};
+                cart = getCartData() || createCart();
+                if (cart != null) {
+                    createCart();
                 }
-                setCartData(cartData);
             }
 
 

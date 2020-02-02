@@ -23,13 +23,8 @@
                     }
 
                     var cartData = getCartData();
-                    var totalCartCounter = 0;
 
-                    for (itemId in cartData) {
-                        totalCartCounter += cartData[itemId].quantity;
-                    }
-
-                    $("#cart-counter").text(totalCartCounter);
+                    $("#cart-counter").text(cartData.totalItems);
                 });
             </script>
             <p class="lead">
