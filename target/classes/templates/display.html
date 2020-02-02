@@ -8,13 +8,28 @@
             <hr class="my-4">
             <p>You can select the categories in the main menu and observe the list of parts and etc.</p>
             <script type="text/javascript" th:inline="javascript">
-                $.ajax({
-                    type : "GET",
-                    contentType : "application/json",
-                    url : '/cart/getTotalCount',
-                    success : function(data) {
-                        $("#cart-counter").text(data);
+                <!--$.ajax({-->
+                    <!--type : "GET",-->
+                    <!--contentType : "application/json",-->
+                    <!--url : '/cart/getTotalCount',-->
+                    <!--success : function(data) {-->
+                        <!--$("#cart-counter").text(data);-->
+                    <!--}-->
+                <!--});-->
+
+                $(document).ready(function(){
+                    function getCartData() {
+                        return JSON.parse(localStorage.getItem('cart'));
                     }
+
+                    var cartData = getCartData();
+                    var totalCartCounter = 0;
+
+                    for (itemId in cartData) {
+                        totalCartCounter += cartData[itemId].quantity;
+                    }
+
+                    $("#cart-counter").text(totalCartCounter);
                 });
             </script>
             <p class="lead">

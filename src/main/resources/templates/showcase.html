@@ -41,16 +41,18 @@
                 $(this).prop('disabled', true);
 
                 var buttonSibling = $(this).siblings("div.control-form");
-
                 var parentBox = $(this).parent().parent();
                 var availableSibling = parentBox.siblings("#available");
+                var imageSibling = parentBox.parent().siblings("#image");
+
 
                 var item = {
                     itemId: $(this).attr("id"),
                     quantity: parseInt(buttonSibling[0].lastElementChild.value),
                     partNumber: parentBox.siblings("#partnumber").text(),
                     engName: parentBox.siblings("#engname").text(),
-                    available: parseInt(availableSibling[0].lastElementChild.innerText)
+                    available: parseInt(availableSibling[0].lastElementChild.innerText),
+                    image: imageSibling[0].src
                 }
 
                 addToCart(item);
